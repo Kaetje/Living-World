@@ -1,7 +1,7 @@
 <?php
 $key=$_GET["key"];
-require "database.php";
-require "functions.php";
+require_once "database.php";
+require_once "functions.php";
 $character=getcharacter($key);
 $events=geteventsforcharacter($key);
 ?>
