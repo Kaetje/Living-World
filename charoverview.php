@@ -3,6 +3,7 @@ $key=$_GET["key"];
 require "database.php";
 require "functions.php";
 $character=getcharacter($key);
+$events=geteventsforcharacter($key);
 ?>
 
 
@@ -12,3 +13,19 @@ $character=getcharacter($key);
 <?php echo (int)$character["XP"]; echo ' XP' ; ?>
 
 
+<table style="width:100%">
+    <tr>
+        <th>Session number</th>
+        <th>Description</th>
+        <th>XP amount</th>
+    </tr>
+    <?php foreach ($events as $event): ?>
+        <tr>
+            <td><?php echo $event["sessionnumber"]; ?></td>
+            <td><?php echo $event["description"];?></td>
+            <td><?php echo (int)$event["xpamount"]; ?></td>
+
+        </tr>
+    <?php endforeach; ?>
+
+</table>

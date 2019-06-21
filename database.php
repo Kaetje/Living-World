@@ -38,3 +38,14 @@ function addevent($sessionnumber, $description, $xpamount, $characters)
         mysqli_query($db, "INSERT INTO `characters_xpevents` (`character_id`, `xpevent_id`) VALUES ('$character', '$xpevent_id')");
     }
 }
+
+function geteventsforcharacter($charid){
+    $db=mysqli_connect("localhost:3306", "root", "", "dnd");
+    $query=mysqli_query($db,
+        "SELECT xpevents.sessionnumber as sessionnumber, xpevents.description as description, xpevents.xpamount as xpamount
+                FROM xpevents 
+                JOIN characters_xpevents ON xpevents.ID = characters_xpevents.xpevent_id 
+                WHERE characters_xpevents.character_id = $charid");
+    $events=mysqli_fetch_all($query, MYSQLI_ASSOC);
+    return $events;
+}
