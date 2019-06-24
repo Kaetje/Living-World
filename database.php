@@ -5,7 +5,7 @@ require 'conf.php';
 function getcharacters(){
     $db=mysqli_connect(DB_HOST, DB_USERNAME, DB_PASSWORD, DB_NAME);
     $query=mysqli_query($db,
-        "SELECT PlayerName as playername, CharacterName as charname, SUM(xpevents.xpamount) as XP, characters.ID as charid 
+        "SELECT PlayerName as playername, CharacterName as charname, SUM(xpevents.xpamount) as XP, characters.ID as charid, Race as race, Class as class, Status as status
                 FROM `characters` 
                 LEFT JOIN characters_xpevents on characters.ID = characters_xpevents.character_id 
                 LEFT JOIN xpevents on characters_xpevents.xpevent_id = xpevents.ID 
@@ -14,14 +14,14 @@ function getcharacters(){
     return $characters;
 }
 
-function addcharacter($charname, $playername){
+function addcharacter($charname, $playername, $race, $class){
     $db=mysqli_connect(DB_HOST, DB_USERNAME, DB_PASSWORD, DB_NAME);
-    mysqli_query($db, "INSERT INTO `characters` (`ID`, `CharacterName`, `PlayerName`) VALUES (NULL, '$charname', '$playername')");
+    mysqli_query($db, "INSERT INTO `characters` (`ID`, `CharacterName`, `PlayerName`, `Race`, `Class`, `Status`) VALUES (NULL, '$charname', '$playername', '$race', '$class', 'Ready')");
 }
 
 function getcharacter($charid){
     $db=mysqli_connect(DB_HOST, DB_USERNAME, DB_PASSWORD, DB_NAME);
-    $query=mysqli_query($db, "SELECT PlayerName as playername, CharacterName as charname, SUM(xpevents.xpamount) as XP, characters.ID as charid 
+    $query=mysqli_query($db, "SELECT PlayerName as playername, CharacterName as charname, SUM(xpevents.xpamount) as XP, characters.ID as charid, Race as race, Class as class, Status as status 
                 FROM `characters` 
                 LEFT JOIN characters_xpevents on characters.ID = characters_xpevents.character_id 
                 LEFT JOIN xpevents on characters_xpevents.xpevent_id = xpevents.ID 

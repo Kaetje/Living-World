@@ -33,6 +33,9 @@ CREATE TABLE IF NOT EXISTS `characters` (
   `ID` int(11) NOT NULL AUTO_INCREMENT,
   `CharacterName` varchar(255) NOT NULL,
   `PlayerName` varchar(255) NOT NULL,
+  `Race` varchar(255) NOT NULL,
+  `Class` varchar(255) NOT NULL,
+  `Status` varchar(255) NOT NULL,
   PRIMARY KEY (`ID`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
