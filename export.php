@@ -8,13 +8,20 @@ echo outputFullTable($characters);
 
 function outputFullTable($characters)
 {
-    $str = outputHeader();
+    $str = '';
+    $str .= outputIntro();
+    $str .= outputHeader();
     $blocks = outputAllCharBlocks($characters);
     if ($blocks) {
         $str .= "|-\n" . $blocks;
     }
     $str .= '|}';
     return $str;
+}
+
+function outputIntro()
+{
+    return "Dit is het ''officiele'' karakter overzicht. Hier zie je wie er nog in het spel zijn en hoeveel XP die karakters hebben.\n\n";
 }
 
 function outputHeader()
