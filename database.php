@@ -1,7 +1,9 @@
 <?php
 
+require 'conf.php';
+
 function getcharacters(){
-    $db=mysqli_connect("localhost:3306", "root", "", "dnd");
+    $db=mysqli_connect(DB_HOST, DB_USERNAME, DB_PASSWORD, DB_NAME);
     $query=mysqli_query($db,
         "SELECT PlayerName as playername, CharacterName as charname, SUM(xpevents.xpamount) as XP, characters.ID as charid 
                 FROM `characters` 
@@ -13,12 +15,12 @@ function getcharacters(){
 }
 
 function addcharacter($charname, $playername){
-    $db=mysqli_connect("localhost:3306", "root", "", "dnd");
+    $db=mysqli_connect(DB_HOST, DB_USERNAME, DB_PASSWORD, DB_NAME);
     mysqli_query($db, "INSERT INTO `characters` (`ID`, `CharacterName`, `PlayerName`) VALUES (NULL, '$charname', '$playername')");
 }
 
 function getcharacter($charid){
-    $db=mysqli_connect("localhost:3306", "root", "", "dnd");
+    $db=mysqli_connect(DB_HOST, DB_USERNAME, DB_PASSWORD, DB_NAME);
     $query=mysqli_query($db, "SELECT PlayerName as playername, CharacterName as charname, SUM(xpevents.xpamount) as XP, characters.ID as charid 
                 FROM `characters` 
                 LEFT JOIN characters_xpevents on characters.ID = characters_xpevents.character_id 
@@ -31,7 +33,7 @@ function getcharacter($charid){
 
 function addevent($sessionnumber, $description, $xpamount, $characters)
 {
-    $db = mysqli_connect("localhost:3306", "root", "", "dnd");
+    $db=mysqli_connect(DB_HOST, DB_USERNAME, DB_PASSWORD, DB_NAME);
     mysqli_query($db, "INSERT INTO `xpevents` (`ID`, `sessionnumber`, `description`, `xpamount`) VALUES (NULL, '$sessionnumber', '$description', '$xpamount')");
     $xpevent_id=mysqli_insert_id($db);
     foreach ($characters as $character){
@@ -40,7 +42,7 @@ function addevent($sessionnumber, $description, $xpamount, $characters)
 }
 
 function geteventsforcharacter($charid){
-    $db=mysqli_connect("localhost:3306", "root", "", "dnd");
+    $db=mysqli_connect(DB_HOST, DB_USERNAME, DB_PASSWORD, DB_NAME);
     $query=mysqli_query($db,
         "SELECT xpevents.sessionnumber as sessionnumber, xpevents.description as description, xpevents.xpamount as xpamount
                 FROM xpevents 
