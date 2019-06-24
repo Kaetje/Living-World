@@ -8,6 +8,8 @@ $characters=getcharacters();
 
 ?>
 
+<a href="export.php">Export table to WikiMedia format.</a><br />
+<br />
 <table style="width:100%">
     <tr>
         <th>Character name</th>
@@ -26,7 +28,6 @@ $characters=getcharacters();
     <?php endforeach; ?>
 
 </table>
-
 
 <form method="post">
     <label for="CharacterName">Character Name:</label> <input id="CharacterName" type="text" name="CharacterName"/><br/>
