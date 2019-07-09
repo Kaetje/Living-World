@@ -4,7 +4,9 @@ require_once "functions.php";
 require_once "database.php";
 
 $characters = getcharacters();
+echo '<pre>';
 echo outputFullTable($characters);
+echo '</pre>';
 
 function outputFullTable($characters)
 {
@@ -57,5 +59,5 @@ function outputCharBlock($character)
         '|' . $character['status'],
         '|' . $character['XP']
     ];
-    return implode("\n", $parts);
+    return implode("\n", $parts) . "\n";
 }
