@@ -37,7 +37,7 @@ function outputHeader()
         '!status',
         '!xp',
     ];
-    return implode("\n", $parts);
+    return implode("\n", $parts) . "\n";
 }
 
 function outputAllCharBlocks($characters)
