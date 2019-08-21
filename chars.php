@@ -8,14 +8,17 @@ if(isset($_POST["PlayerName"])){
 $characters=$database->getcharacters();
 
 ?>
-<header>
-    <?php
-    require "navbar.php"
-    ?>
-</header>
+<html>
+<head>
+    <link rel="stylesheet" type="text/css" href="style1.css">
+    <title>Character Overview</title>
+</head>
 
 <body>
-<link rel="stylesheet" type="text/css" href="style1.css">
+<?php
+require "navbar.php"
+?>
+
 
 <a href="export.php">Export table to WikiMedia format.</a><br />
 <br />
@@ -56,3 +59,4 @@ $characters=$database->getcharacters();
     <input type="submit" value="Submit"/>
 </form>
 </body>
+</html>
