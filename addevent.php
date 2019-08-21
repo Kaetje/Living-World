@@ -10,14 +10,17 @@ if(isset($_POST["xpamount"])){
 $characters=$database->getcharacters();
 
 ?>
-<header>
-    <?php
-    require "navbar.php"
-    ?>
-</header>
+
+<html>
+<head>
+    <link rel="stylesheet" type="text/css" href="style1.css">
+    <title>Add Event</title>
+</head>
 
 <body>
-<link rel="stylesheet" type="text/css" href="style1.css">
+<?php
+require "navbar.php"
+?>
 
 <form method="post">
     <label for="sessionnumber">Session Number:</label> <input id="sessionnumber" type="text" name="sessionnumber"/><br/>

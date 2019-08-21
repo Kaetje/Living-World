@@ -6,14 +6,17 @@ $database=new database();
 $character=$database->getcharacter($key);
 $events=$database->geteventsforcharacter($key);
 ?>
-<header>
-    <?php
-    require "navbar.php"
-    ?>
-</header>
+
+<html>
+<head>
+    <link rel="stylesheet" type="text/css" href="style1.css">
+    <title><?php echo $character->getCharname(); ?></title>
+</head>
 
 <body>
-<link rel="stylesheet" type="text/css" href="style1.css">
+<?php
+require "navbar.php"
+?>
 
 <h1 class="charname"><?php echo $character->getCharname(); ?></h1>
 <h2><?php echo 'Level '; echo $character->getLevel(); ?> - <?php echo $character->getXP(); echo ' XP' ; ?></h2>
@@ -37,3 +40,4 @@ $events=$database->geteventsforcharacter($key);
 
 </table>
 </body>
+</html>
