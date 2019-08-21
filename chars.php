@@ -1,6 +1,9 @@
 <?php
 
 require_once "classes/database.php";
+require_once "classes/Table.php";
+require_once "classes/TableColumn.php";
+require_once "classes/TableColumnCharName.php";
 $database=new database();
 if(isset($_POST["PlayerName"])){
     $database->addcharacter($_POST["CharacterName"], $_POST["PlayerName"], $_POST["Race"], $_POST["Class"]);
@@ -22,30 +25,21 @@ require "navbar.php"
 
 <a href="export.php">Export table to WikiMedia format.</a><br />
 <br />
-<table>
-    <tr>
-        <th>Character name</th>
-        <th>Player name</th>
-        <th>Race</th>
-        <th>Class</th>
-        <th>Level</th>
-        <th>XP</th>
-        <th>Status</th>
-    </tr>
-    <?php foreach ($characters as $character): ?>
-        <tr>
-            <td><a href="charoverview.php?key=<?php echo $character->getId(); ?>"><?php echo $character->getCharname(); ?></a></td>
-            <td><?php echo $character->getPlayerName(); ?></td>
-            <td><?php echo $character->getRace(); ?></td>
-            <td><?php echo $character->getClass(); ?></td>
-            <td><?php echo $character->getLevel();?></td>
-            <td><?php echo $character->getXP(); ?></td>
-            <td><?php echo $character->getStatus(); ?></td>
 
-        </tr>
-    <?php endforeach; ?>
+<?php
+$table=new Table();
+$table->addColumn(new TableColumnCharName('Character name'));
+$table->addColumn(new TableColumn('Player name', 'getPlayerName'));
+$table->addColumn(new TableColumn('Race', 'getRace'));
+$table->addColumn(new TableColumn('Class', 'getClass'));
+$table->addColumn(new TableColumn('Level', 'getLevel'));
+$table->addColumn(new TableColumn('XP', 'getXP'));
+$table->addColumn(new TableColumn('Status', 'getStatus'));
+$table->addData($characters);
+echo $table->render();
+?>
 
-</table>
+
 
 <form method="post">
     <label for="CharacterName">Character Name:</label><br/>
