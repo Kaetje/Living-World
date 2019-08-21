@@ -53,7 +53,7 @@ function outputCharBlock($character)
 {
     $parts = [
         '|[[' . $character['charname'] . ']]',
-        '|' . $character['player'],
+        '|' . $character['playername'],
         '|' . $character['race'],
         '|' . $character['class'] . ' ' . calculateLevel($character['XP']),
         '|' . $character['status'],
