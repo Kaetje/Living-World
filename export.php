@@ -1,9 +1,15 @@
 <?php
 
 require_once "functions.php";
-require_once "database.php";
+#require_once "database.php";
 
-$characters = getcharacters();
+#$characters = getcharacters();
+
+require_once "classes/database.php";
+$database=new database();
+
+$characters=$database->getcharacters();
+
 echo '<pre>';
 echo outputFullTable($characters);
 echo '</pre>';

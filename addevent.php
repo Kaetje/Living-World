@@ -1,12 +1,23 @@
 <?php
 require "functions.php";
-require "database.php";
+require_once "classes/database.php";
+$database=new database();
+
+
 if(isset($_POST["xpamount"])){
-    addevent($_POST["sessionnumber"], $_POST["description"], $_POST["xpamount"], $_POST["characters"]);
+    $database->addevent($_POST["sessionnumber"], $_POST["description"], $_POST["xpamount"], $_POST["characters"]);
 }
-$characters=getcharacters();
+$characters=$database->getcharacters();
 
 ?>
+<header>
+    <?php
+    require "navbar.php"
+    ?>
+</header>
+
+<body>
+<link rel="stylesheet" type="text/css" href="style1.css">
 
 <form method="post">
     <label for="sessionnumber">Session Number:</label> <input id="sessionnumber" type="text" name="sessionnumber"/><br/>
@@ -14,10 +25,11 @@ $characters=getcharacters();
     <label for="xpamount">XP amount:</label> <input id="xpamount" type="text" name="xpamount"/><br/>
 
     <?php foreach ($characters as $character): ?>
-        <input id="<?php echo $character["charid"]; ?>" type="checkbox" name="characters[]" value="<?php echo $character["charid"]; ?>"/>
-        <label for="<?php echo $character["charid"]; ?>"><?php echo $character["charname"]; ?></label> <br/>
+        <input id="<?php echo $character->getId(); ?>" type="checkbox" name="characters[]" value="<?php echo $character->getId(); ?>"/>
+        <label for="<?php echo $character->getId(); ?>"><?php echo $character->getCharname(); ?></label> <br/>
 
     <?php endforeach; ?>
 
     <input type="submit" value="Submit"/>
 </form>
+</body>

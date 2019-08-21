@@ -1,16 +1,23 @@
 <?php
 $key=$_GET["key"];
-require_once "database.php";
 require_once "functions.php";
-$character=getcharacter($key);
-$events=geteventsforcharacter($key);
+require_once "classes/database.php";
+$database=new database();
+$character=$database->getcharacter($key);
+$events=$database->geteventsforcharacter($key);
 ?>
+<header>
+    <?php
+    require "navbar.php"
+    ?>
+</header>
 
+<body>
+<link rel="stylesheet" type="text/css" href="style1.css">
 
-<h1><?php echo $character["charname"]; ?></h1>
-<h2><?php echo $character["playername"]; ?></h2>
-<?php echo 'Level '; echo calculateLevel($character["XP"]); ?> <br/>
-<?php echo (int)$character["XP"]; echo ' XP' ; ?>
+<h1 class="charname"><?php echo $character->getCharname(); ?></h1>
+<h2><?php echo 'Level '; echo $character->getLevel(); ?> - <?php echo $character->getXP(); echo ' XP' ; ?></h2>
+<p>Eigendom van: <?php echo $character->getPlayerName(); ?></p>
 
 
 <table style="width:100%">
@@ -29,3 +36,4 @@ $events=geteventsforcharacter($key);
     <?php endforeach; ?>
 
 </table>
+</body>

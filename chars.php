@@ -1,16 +1,25 @@
 <?php
-require_once "functions.php";
-require_once "database.php";
+
+require_once "classes/database.php";
+$database=new database();
 if(isset($_POST["PlayerName"])){
-    addcharacter($_POST["CharacterName"], $_POST["PlayerName"], $_POST["Race"], $_POST["Class"]);
+    $database->addcharacter($_POST["CharacterName"], $_POST["PlayerName"], $_POST["Race"], $_POST["Class"]);
 }
-$characters=getcharacters();
+$characters=$database->getcharacters();
 
 ?>
+<header>
+    <?php
+    require "navbar.php"
+    ?>
+</header>
+
+<body>
+<link rel="stylesheet" type="text/css" href="style1.css">
 
 <a href="export.php">Export table to WikiMedia format.</a><br />
 <br />
-<table style="width:100%">
+<table>
     <tr>
         <th>Character name</th>
         <th>Player name</th>
@@ -22,13 +31,13 @@ $characters=getcharacters();
     </tr>
     <?php foreach ($characters as $character): ?>
         <tr>
-            <td><a href="charoverview.php?key=<?php echo $character["charid"]; ?>"><?php echo $character["charname"]; ?></a></td>
-            <td><?php echo $character["playername"]; ?></td>
-            <td><?php echo $character["race"]; ?></td>
-            <td><?php echo $character["class"]; ?></td>
-            <td><?php echo calculateLevel($character["XP"]);?></td>
-            <td><?php echo (int)$character["XP"]; ?></td>
-            <td><?php echo $characters['status']; ?></td>
+            <td><a href="charoverview.php?key=<?php echo $character->getId(); ?>"><?php echo $character->getCharname(); ?></a></td>
+            <td><?php echo $character->getPlayerName(); ?></td>
+            <td><?php echo $character->getRace(); ?></td>
+            <td><?php echo $character->getClass(); ?></td>
+            <td><?php echo $character->getLevel();?></td>
+            <td><?php echo $character->getXP(); ?></td>
+            <td><?php echo $character->getStatus(); ?></td>
 
         </tr>
     <?php endforeach; ?>
@@ -36,9 +45,14 @@ $characters=getcharacters();
 </table>
 
 <form method="post">
-    <label for="CharacterName">Character Name:</label> <input id="CharacterName" type="text" name="CharacterName"/><br/>
-    <label for="PlayerName">Player Name:</label> <input id="PlayerName" type="text" name="PlayerName"/><br/>
-    <label for="Race">Race:</label> <input id="Race" type="text" name="Race"/><br/>
-    <label for="Class">Class:</label> <input id="Class" type="text" name="Class"/><br/>
+    <label for="CharacterName">Character Name:</label><br/>
+    <input id="CharacterName" type="text" name="CharacterName"/><br/>
+    <label for="PlayerName">Player Name:</label><br/>
+    <input id="PlayerName" type="text" name="PlayerName"/><br/>
+    <label for="Race">Race:</label><br/>
+    <input id="Race" type="text" name="Race"/><br/>
+    <label for="Class">Class:</label><br/>
+    <input id="Class" type="text" name="Class"/><br/>
     <input type="submit" value="Submit"/>
 </form>
+</body>
