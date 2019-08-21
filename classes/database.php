@@ -6,7 +6,19 @@ class database
 {
     private $connection;
     public function __construct()
-    {$this->connection = mysqli_connect(DB_HOST, DB_USERNAME, DB_PASSWORD, DB_NAME);
+    {
+        $this->connection = mysqli_connect(DB_HOST, DB_USERNAME, DB_PASSWORD, DB_NAME);
+    }
+
+    private function query($sql)
+    {
+        $query = mysqli_query($this->connection, $sql);
+        if ($query == false){
+            echo mysqli_error($this->connection);
+            echo $sql;
+            exit;
+        }
+        return $query;
     }
 
     /**
@@ -14,7 +26,7 @@ class database
      */
     function getcharacters(): array
     {
-        $query = mysqli_query($this->connection,
+        $query = $this->query(
             "SELECT PlayerName as playername, CharacterName as charname, SUM(xpevents.xpamount) as XP, characters.ID as charid, Race as race, Class as class, Status as status
                 FROM `characters` 
                 LEFT JOIN characters_xpevents on characters.ID = characters_xpevents.character_id 
@@ -31,12 +43,13 @@ foreach ($characters as $character) {
 
     function addcharacter($charname, $playername, $race, $class)
     {
-        mysqli_query($this->connection, "INSERT INTO `characters` (`ID`, `CharacterName`, `PlayerName`, `Race`, `Class`, `Status`) VALUES (NULL, '$charname', '$playername', '$race', '$class', 'Ready')");
+        $this->query( "INSERT INTO `characters` (`ID`, `CharacterName`, `PlayerName`, `Race`, `Class`, `Status`) VALUES (NULL, '$charname', '$playername', '$race', '$class', 'Ready')");
     }
 
     function getcharacter($charid): Character
     {
-        $query = mysqli_query($this->connection, "SELECT PlayerName as playername, CharacterName as charname, SUM(xpevents.xpamount) as XP, characters.ID as charid, Race as race, Class as class, Status as status 
+        $query = $this->query(
+            "SELECT PlayerName as playername, CharacterName as charname, SUM(xpevents.xpamount) as XP, characters.ID as charid, Race as race, Class as class, Status as status 
                 FROM `characters` 
                 LEFT JOIN characters_xpevents on characters.ID = characters_xpevents.character_id 
                 LEFT JOIN xpevents on characters_xpevents.xpevent_id = xpevents.ID 
@@ -48,16 +61,19 @@ foreach ($characters as $character) {
 
     function addevent($sessionnumber, $description, $xpamount, $characters)
     {
-        mysqli_query($this->connection, "INSERT INTO `xpevents` (`ID`, `sessionnumber`, `description`, `xpamount`) VALUES (NULL, '$sessionnumber', '$description', '$xpamount')");
+        if ($sessionnumber == ''){
+            $sessionnumber = 'NULL';
+        }
+        $this->query( "INSERT INTO `xpevents` (`ID`, `sessionnumber`, `description`, `xpamount`) VALUES (NULL, $sessionnumber, '$description', $xpamount)");
         $xpevent_id = mysqli_insert_id($this->connection);
         foreach ($characters as $character) {
-            mysqli_query($this->connection, "INSERT INTO `characters_xpevents` (`character_id`, `xpevent_id`) VALUES ('$character', '$xpevent_id')");
+            $this->query("INSERT INTO `characters_xpevents` (`character_id`, `xpevent_id`) VALUES ('$character', '$xpevent_id')");
         }
     }
 
     function geteventsforcharacter($charid)
     {
-        $query = mysqli_query($this->connection,
+        $query = $this->query(
             "SELECT xpevents.sessionnumber as sessionnumber, xpevents.description as description, xpevents.xpamount as xpamount
                 FROM xpevents 
                 JOIN characters_xpevents ON xpevents.ID = characters_xpevents.xpevent_id 
