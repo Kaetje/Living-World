@@ -64,6 +64,13 @@ class Character
         if($this->XP<2700){return 3;}
         if($this->XP<6500){return 4;}
         if($this->XP<14000){return 5;}
+        if($this->XP<23000){return 6;}
+        if($this->XP<34000){return 7;}
+        if($this->XP<48000){return 8;}
+        if($this->XP<64000){return 9;}
+        if($this->XP<85000){return 10;}
+        if($this->XP<100000){return 11;}
+        if($this->XP<120000){return 12;}
     }
 
 }
