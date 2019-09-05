@@ -2,6 +2,7 @@
 
 require 'conf.php';
 require 'classes/Character.php';
+require 'classes/Event.php';
 class database
 {
     private $connection;
@@ -35,9 +36,9 @@ class database
                 ORDER BY charname");
         $characters = mysqli_fetch_all($query, MYSQLI_ASSOC);
         $objects=[];
-foreach ($characters as $character) {
-    $objects[] = new Character($character["charid"], $character["playername"], $character["charname"], $character["race"], $character["class"], $character["XP"], $character["status"]);
-}
+        foreach ($characters as $character) {
+            $objects[] = new Character($character["charid"], $character["playername"], $character["charname"], $character["race"], $character["class"], $character["XP"], $character["status"]);
+        }
         return $objects;
     }
 
@@ -71,14 +72,24 @@ foreach ($characters as $character) {
         }
     }
 
-    function geteventsforcharacter($charid)
+
+    /**
+     * @return Event[]
+     */
+    function geteventsforcharacter($charid): array
     {
         $query = $this->query(
-            "SELECT xpevents.sessionnumber as sessionnumber, xpevents.description as description, xpevents.xpamount as xpamount
+            "SELECT xpevents.sessionnumber as sessionnumber, xpevents.description as description, xpevents.xpamount as XP, xpevents.ID as id
                 FROM xpevents 
                 JOIN characters_xpevents ON xpevents.ID = characters_xpevents.xpevent_id 
-                WHERE characters_xpevents.character_id = $charid");
+                WHERE characters_xpevents.character_id = $charid
+                ORDER BY sessionnumber");
         $events = mysqli_fetch_all($query, MYSQLI_ASSOC);
-        return $events;
+        $objects=[];
+        foreach ($events as $event) {
+            $objects[] = new Event($event["id"], $event["sessionnumber"], $event["description"], $event["XP"]);
+        }
+        return $objects;
     }
+
 }

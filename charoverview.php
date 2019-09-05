@@ -2,6 +2,9 @@
 $key=$_GET["key"];
 require_once "functions.php";
 require_once "classes/database.php";
+require_once "classes/Table.php";
+require_once "classes/TableColumn.php";
+require_once "classes/TableColumnCharName.php";
 $database=new database();
 $character=$database->getcharacter($key);
 $events=$database->geteventsforcharacter($key);
@@ -23,21 +26,17 @@ require "navbar.php"
 <p>Eigendom van: <?php echo $character->getPlayerName(); ?></p>
 
 
-<table style="width:100%">
-    <tr>
-        <th>Session number</th>
-        <th>Description</th>
-        <th>XP amount</th>
-    </tr>
-    <?php foreach ($events as $event): ?>
-        <tr>
-            <td><?php echo $event["sessionnumber"]; ?></td>
-            <td><?php echo $event["description"];?></td>
-            <td><?php echo (int)$event["xpamount"]; ?></td>
+<?php
+$table=new Table();
+$table->addColumn(new TableColumn('Session number', 'getSessionnumber'));
+$table->addColumn(new TableColumn('Description', 'getDescription'));
+$table->addColumn(new TableColumn('XP amount', 'getXP'));
+$table->addData($events);
+echo $table->render();
+?>
 
-        </tr>
-    <?php endforeach; ?>
 
-</table>
+
+
 </body>
 </html>
