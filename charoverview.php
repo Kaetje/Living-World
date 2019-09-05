@@ -7,7 +7,9 @@ require_once "classes/TableColumn.php";
 require_once "classes/TableColumnCharName.php";
 $database=new database();
 $character=$database->getcharacter($key);
-$events=$database->geteventsforcharacter($key);
+$EventsQuery=$database->getEventsQuery($key);
+
+
 ?>
 
 <html>
@@ -27,11 +29,11 @@ require "navbar.php"
 
 
 <?php
-$table=new Table();
-$table->addColumn(new TableColumn('Session number', 'getSessionnumber'));
-$table->addColumn(new TableColumn('Description', 'getDescription'));
-$table->addColumn(new TableColumn('XP amount', 'getXP'));
-$table->addData($events);
+$table=new Table('charoverview.php?key='.$key, $database);
+$table->addColumn(new TableColumn('Session number', 'getSessionnumber', 'sessionnumber'));
+$table->addColumn(new TableColumn('Description', 'getDescription', 'description'));
+$table->addColumn(new TableColumn('XP amount', 'getXP', 'XP'));
+$table->setQuery($EventsQuery);
 echo $table->render();
 ?>
 

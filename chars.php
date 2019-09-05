@@ -27,7 +27,7 @@ require "navbar.php"
 <br />
 
 <?php
-$table=new Table();
+$table=new Table('chars.php');
 $table->addColumn(new TableColumnCharName('Character name'));
 $table->addColumn(new TableColumn('Player name', 'getPlayerName'));
 $table->addColumn(new TableColumn('Race', 'getRace'));
@@ -35,7 +35,7 @@ $table->addColumn(new TableColumn('Class', 'getClass'));
 $table->addColumn(new TableColumn('Level', 'getLevel'));
 $table->addColumn(new TableColumn('XP', 'getXP'));
 $table->addColumn(new TableColumn('Status', 'getStatus'));
-$table->addData($characters);
+$table->setQuery($characters);
 echo $table->render();
 ?>
 

@@ -3,6 +3,7 @@
 require 'conf.php';
 require 'classes/Character.php';
 require 'classes/Event.php';
+require 'classes/Query.php';
 class database
 {
     private $connection;
@@ -76,14 +77,10 @@ class database
     /**
      * @return Event[]
      */
-    function geteventsforcharacter($charid): array
+    function getEventsFromQuery(Query $query): array
     {
         $query = $this->query(
-            "SELECT xpevents.sessionnumber as sessionnumber, xpevents.description as description, xpevents.xpamount as XP, xpevents.ID as id
-                FROM xpevents 
-                JOIN characters_xpevents ON xpevents.ID = characters_xpevents.xpevent_id 
-                WHERE characters_xpevents.character_id = $charid
-                ORDER BY sessionnumber");
+            $query->getQuery());
         $events = mysqli_fetch_all($query, MYSQLI_ASSOC);
         $objects=[];
         foreach ($events as $event) {
@@ -92,4 +89,11 @@ class database
         return $objects;
     }
 
+    function getEventsQuery($charid): Query
+    {
+        return new Query("SELECT xpevents.sessionnumber as sessionnumber, xpevents.description as description, xpevents.xpamount as XP, xpevents.ID as id
+                FROM xpevents 
+                JOIN characters_xpevents ON xpevents.ID = characters_xpevents.xpevent_id 
+                WHERE characters_xpevents.character_id = $charid");
+    }
 }
