@@ -3,8 +3,8 @@
 
 class Table
 {
-    /** @var TableColumn[]  */
-    private $columns=[];
+    /** @var TableColumn[] */
+    private $columns = [];
 
     /**
      * @var Query
@@ -25,28 +25,39 @@ class Table
     }
 
 
-    public function addColumn(TableColumn $column){
+    public function addColumn(TableColumn $column)
+    {
         $this->columns[] = $column;
     }
 
-    public function setQuery(Query $query){
+    public function setQuery(Query $query)
+    {
         $this->query = $query;
     }
 
-    public function render():string {
-        if (isset($_GET['column'])){$this->query->addOrderBy($_GET['column'], $_GET['direction']);}
+    public function render(): string
+    {
+        if (isset($_GET['column'])) {
+            $this->query->addOrderBy($_GET['column'], $_GET['direction']);
+        }
 
         $output = '';
         $output .= '<table>';
         $output .= '<tr>';
-        foreach ($this->columns as $column){
-            $output .= '<th>'.$column->getTitle().'<a href="'.$this->url.'&column='.$column->getSortColumn().'&direction=asc">order ascending</a></th>';
+        foreach ($this->columns as $column) {
+
+            $output .= '<th>' . $column->getTitle();
+            if ($column->getSortColumn()) {
+                $output .= '<a href="' . $this->createUrl($column, "asc") . '">order ascending</a>';
+                $output .= '<a href="' . $this->createUrl($column, "desc") . '">order descending</a>';
+            }
+            $output .= '</th>';
         }
         $output .= '</tr>';
-        foreach ($this->repository->getObjectsFromQuery($this->query) as $item){
+        foreach ($this->repository->getObjectsFromQuery($this->query) as $item) {
             $output .= '<tr>';
-            foreach ($this->columns as $column){
-                $output .= '<td>'.$column->renderItem($item).'</td>';
+            foreach ($this->columns as $column) {
+                $output .= '<td>' . $column->renderItem($item) . '</td>';
             }
             $output .= '</tr>';
         }
@@ -55,5 +66,15 @@ class Table
         return $output;
     }
 
+
+    private function createUrl(TableColumn $column, $direction)
+    {
+        if (strpos($this->url, "?")) {
+            return $this->url . '&column=' . $column->getSortColumn() . '&direction=' . $direction;
+        } else {
+            return $this->url . '?column=' . $column->getSortColumn() . '&direction=' . $direction;
+
+        }
+    }
 }
 
