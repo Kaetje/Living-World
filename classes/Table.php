@@ -14,14 +14,14 @@ class Table
     private $url;
 
     /**
-     * @var database
+     * @var Repository
      */
-    private $database;
+    private $repository;
 
-    public function __construct(string $url, database $database)
+    public function __construct(string $url, Repository $repository)
     {
         $this->url = $url;
-        $this->database = $database;
+        $this->repository = $repository;
     }
 
 
@@ -43,7 +43,7 @@ class Table
             $output .= '<th>'.$column->getTitle().'<a href="'.$this->url.'&column='.$column->getSortColumn().'&direction=asc">order ascending</a></th>';
         }
         $output .= '</tr>';
-        foreach ($this->database->getEventsFromQuery($this->query) as $item){
+        foreach ($this->repository->getObjectsFromQuery($this->query) as $item){
             $output .= '<tr>';
             foreach ($this->columns as $column){
                 $output .= '<td>'.$column->renderItem($item).'</td>';

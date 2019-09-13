@@ -9,7 +9,7 @@ class TableColumn
     private $dataFunction;
     private $sortColumn;
 
-    public function __construct($title, $dataFunction, $sortColumn)
+    public function __construct($title, $dataFunction, $sortColumn="")
     {
         $this->title = $title;
         $this->dataFunction = $dataFunction;

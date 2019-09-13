@@ -4,11 +4,13 @@ require_once "classes/database.php";
 require_once "classes/Table.php";
 require_once "classes/TableColumn.php";
 require_once "classes/TableColumnCharName.php";
+require_once "classes/CharacterRepository.php";
 $database=new database();
+$CharacterRepository=new CharacterRepository($database);
 if(isset($_POST["PlayerName"])){
-    $database->addcharacter($_POST["CharacterName"], $_POST["PlayerName"], $_POST["Race"], $_POST["Class"]);
+    $CharacterRepository->addcharacter($_POST["CharacterName"], $_POST["PlayerName"], $_POST["Race"], $_POST["Class"]);
 }
-$characters=$database->getcharacters();
+$characters=$CharacterRepository->getcharacters();
 
 ?>
 <html>
@@ -27,7 +29,7 @@ require "navbar.php"
 <br />
 
 <?php
-$table=new Table('chars.php');
+$table=new Table('chars.php', $CharacterRepository);
 $table->addColumn(new TableColumnCharName('Character name'));
 $table->addColumn(new TableColumn('Player name', 'getPlayerName'));
 $table->addColumn(new TableColumn('Race', 'getRace'));
@@ -35,7 +37,7 @@ $table->addColumn(new TableColumn('Class', 'getClass'));
 $table->addColumn(new TableColumn('Level', 'getLevel'));
 $table->addColumn(new TableColumn('XP', 'getXP'));
 $table->addColumn(new TableColumn('Status', 'getStatus'));
-$table->setQuery($characters);
+$table->setQuery(new Query(''));
 echo $table->render();
 ?>
 
