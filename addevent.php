@@ -1,13 +1,14 @@
 <?php
-require "functions.php";
-require_once "classes/database.php";
-$database=new database();
 
+require_once "autoload.php";
+$database=new database();
+$EventRepository=new EventRepository($database);
+$CharacterRepository=new CharacterRepository($database);
 
 if(isset($_POST["xpamount"])){
-    $database->addevent($_POST["sessionnumber"], $_POST["description"], $_POST["xpamount"], $_POST["characters"]);
+    $EventRepository->addevent($_POST["sessionnumber"], $_POST["description"], $_POST["xpamount"], $_POST["characters"]);
 }
-$characters=$database->getcharacters();
+$characters=$CharacterRepository->getcharacters();
 
 ?>
 

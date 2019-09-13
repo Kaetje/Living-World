@@ -1,13 +1,13 @@
 <?php
 $key=$_GET["key"];
-require_once "functions.php";
-require_once "classes/database.php";
-require_once "classes/Table.php";
-require_once "classes/TableColumn.php";
-require_once "classes/TableColumnCharName.php";
+require_once "autoload.php";
 $database=new database();
-$character=$database->getcharacter($key);
-$events=$database->geteventsforcharacter($key);
+$CharacterRepository=new CharacterRepository($database);
+$EventRepository=new EventRepository($database);
+$character=$CharacterRepository->getcharacter($key);
+$EventsQuery=$EventRepository->getEventsQuery($key);
+
+
 ?>
 
 <html>
@@ -27,11 +27,11 @@ require "navbar.php"
 
 
 <?php
-$table=new Table();
-$table->addColumn(new TableColumn('Session number', 'getSessionnumber'));
-$table->addColumn(new TableColumn('Description', 'getDescription'));
-$table->addColumn(new TableColumn('XP amount', 'getXP'));
-$table->addData($events);
+$table=new Table('charoverview.php?key='.$key, $EventRepository);
+$table->addColumn(new TableColumn('Session number', 'getSessionnumber', 'sessionnumber'));
+$table->addColumn(new TableColumn('Description', 'getDescription', 'description'));
+$table->addColumn(new TableColumn('XP amount', 'getXP', 'XP'));
+$table->setQuery($EventsQuery);
 echo $table->render();
 ?>
 
