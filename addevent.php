@@ -1,8 +1,6 @@
 <?php
-require "functions.php";
-require_once "classes/database.php";
-require_once "classes/EventRepository.php";
-require_once "classes/CharacterRepository.php";
+
+require_once "autoload.php";
 $database=new database();
 $EventRepository=new EventRepository($database);
 $CharacterRepository=new CharacterRepository($database);

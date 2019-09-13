@@ -1,8 +1,7 @@
 <?php
 
 
-require 'classes/Character.php';
-require_once 'classes/Repository.php';
+
 
 class CharacterRepository implements Repository
 {

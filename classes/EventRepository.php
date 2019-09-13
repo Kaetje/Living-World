@@ -1,7 +1,6 @@
 <?php
 
-require 'classes/Event.php';
-require_once 'classes/Repository.php';
+
 class EventRepository implements Repository
 {
    /** @var database */

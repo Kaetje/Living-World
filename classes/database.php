@@ -1,7 +1,7 @@
 <?php
 
 require 'conf.php';
-require 'classes/Query.php';
+
 class database
 {
     private $connection;

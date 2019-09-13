@@ -1,11 +1,10 @@
 <?php
 
-require_once "functions.php";
+require_once "autoload.php";
 #require_once "database.php";
 
 #$characters = getcharacters();
 
-require_once "classes/database.php";
 $database=new database();
 
 $characters=$database->getcharacters();

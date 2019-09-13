@@ -1,12 +1,6 @@
 <?php
 $key=$_GET["key"];
-require_once "functions.php";
-require_once "classes/database.php";
-require_once "classes/Table.php";
-require_once "classes/TableColumn.php";
-require_once "classes/TableColumnCharName.php";
-require_once "classes/CharacterRepository.php";
-require_once "classes/EventRepository.php";
+require_once "autoload.php";
 $database=new database();
 $CharacterRepository=new CharacterRepository($database);
 $EventRepository=new EventRepository($database);
