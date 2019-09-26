@@ -12,7 +12,7 @@ $characters=$CharacterRepository->getcharacters();
 <html>
 <head>
     <link rel="stylesheet" type="text/css" href="style1.css">
-    <title>Character Overview</title>
+    <title>Characters Overview</title>
 </head>
 
 <body>
@@ -25,7 +25,7 @@ require "navbar.php"
 <br />
 
 <?php
-$table=new Table('chars.php', $CharacterRepository);
+$table=new Table('characters.php', $CharacterRepository);
 $table->addColumn(new TableColumnCharName('Character name'));
 $table->addColumn(new TableColumn('Player name', 'getPlayerName'));
 $table->addColumn(new TableColumn('Race', 'getRace'));

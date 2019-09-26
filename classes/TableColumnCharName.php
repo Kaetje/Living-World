@@ -5,7 +5,7 @@ class TableColumnCharName extends TableColumn
 {
     public function renderItem($item)
     {
-        return '<a href="charoverview.php?key='. $item->getId().'">'.$item->getCharname().'</a>';
+        return '<a href="character.php?key='. $item->getId().'">'.$item->getCharname().'</a>';
     }
 
     public function __construct($title)

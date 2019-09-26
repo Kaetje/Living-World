@@ -27,7 +27,7 @@ require "navbar.php"
 
 
 <?php
-$table=new Table('charoverview.php?key='.$key, $EventRepository);
+$table=new Table('character.php?key='.$key, $EventRepository);
 $table->addColumn(new TableColumn('Session number', 'getSessionnumber', 'sessionnumber'));
 $table->addColumn(new TableColumn('Description', 'getDescription', 'description'));
 $table->addColumn(new TableColumn('XP amount', 'getXP', 'XP'));
