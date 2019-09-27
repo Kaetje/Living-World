@@ -6,8 +6,8 @@ require_once "autoload.php";
 #$characters = getcharacters();
 
 $database=new database();
-
-$characters=$database->getcharacters();
+$CharacterRepository=new CharacterRepository($database);
+$characters=$CharacterRepository->getcharacters();
 
 echo '<pre>';
 echo outputFullTable($characters);
@@ -54,15 +54,15 @@ function outputAllCharBlocks($characters)
     return implode("|-\n", $parts);
 }
 
-function outputCharBlock($character)
+function outputCharBlock(Character $character)
 {
     $parts = [
-        '|[[' . $character['charname'] . ']]',
-        '|' . $character['playername'],
-        '|' . $character['race'],
-        '|' . $character['class'] . ' ' . calculateLevel($character['XP']),
-        '|' . $character['status'],
-        '|' . $character['XP']
+        '|[[' . $character->getCharname() . ']]',
+        '|' . $character->getPlayerName(),
+        '|' . $character->getRace(),
+        '|' . $character->getClass() . ' ' . $character->getLevel(),
+        '|' . $character->getStatus(),
+        '|' . $character->getXP()
     ];
     return implode("\n", $parts) . "\n";
 }
