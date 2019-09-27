@@ -51,9 +51,34 @@ class CharacterRepository implements Repository
         return new Character($character["charid"], $character["playername"], $character["charname"], $character["race"], $character["class"], $character["XP"], $character["status"]);
     }
 
+    /**
+     * @return Character[]
+     */
+    function getCharactersFromQuery(Query $query): array
+    {
+        $query = $this->db->query(
+            $query->getQuery());
+        $characters = mysqli_fetch_all($query, MYSQLI_ASSOC);
+        $objects=[];
+        foreach ($characters as $character) {
+            $objects[] = new Character($character["charid"], $character["playername"], $character["charname"], $character["race"], $character["class"], $character["XP"], $character["status"]);
+        }
+        return $objects;
+    }
+
+    function getCharactersQuery(): Query
+    {
+        return new Query("SELECT PlayerName as playername, CharacterName as charname, SUM(xpevents.xpamount) as XP, characters.ID as charid, Race as race, Class as class, Status as status
+                FROM `characters` 
+                LEFT JOIN characters_xpevents on characters.ID = characters_xpevents.character_id 
+                LEFT JOIN xpevents on characters_xpevents.xpevent_id = xpevents.ID 
+                GROUP BY charid");
+    }
+
+
     public function getObjectsFromQuery(Query $query): array
     {
-        return $this->getcharacters();
+        return $this->getCharactersFromQuery($query);
     }
 
 

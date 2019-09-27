@@ -10,7 +10,7 @@ class TableColumnCharName extends TableColumn
 
     public function __construct($title)
     {
-        parent::__construct($title, '');
+        parent::__construct($title, '', "CharacterName");
     }
 
 }

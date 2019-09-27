@@ -6,8 +6,8 @@ $CharacterRepository=new CharacterRepository($database);
 if(isset($_POST["PlayerName"])){
     $CharacterRepository->addcharacter($_POST["CharacterName"], $_POST["PlayerName"], $_POST["Race"], $_POST["Class"]);
 }
-$characters=$CharacterRepository->getcharacters();
 
+$charactersQuery=$CharacterRepository->getcharactersQuery();
 ?>
 <html>
 <head>
@@ -27,13 +27,13 @@ require "navbar.php"
 <?php
 $table=new Table('characters.php', $CharacterRepository);
 $table->addColumn(new TableColumnCharName('Character name'));
-$table->addColumn(new TableColumn('Player name', 'getPlayerName'));
-$table->addColumn(new TableColumn('Race', 'getRace'));
-$table->addColumn(new TableColumn('Class', 'getClass'));
-$table->addColumn(new TableColumn('Level', 'getLevel'));
-$table->addColumn(new TableColumn('XP', 'getXP'));
-$table->addColumn(new TableColumn('Status', 'getStatus'));
-$table->setQuery(new Query(''));
+$table->addColumn(new TableColumn('Player name', 'getPlayerName', 'PlayerName'));
+$table->addColumn(new TableColumn('Race', 'getRace', 'Race'));
+$table->addColumn(new TableColumn('Class', 'getClass', 'Class'));
+$table->addColumn(new TableColumn('Level', 'getLevel', 'XP'));
+$table->addColumn(new TableColumn('XP', 'getXP', 'XP'));
+$table->addColumn(new TableColumn('Status', 'getStatus', 'Status'));
+$table->setQuery($charactersQuery);
 echo $table->render();
 ?>
 
