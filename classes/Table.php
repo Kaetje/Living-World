@@ -48,8 +48,8 @@ class Table
 
             $output .= '<th>' . $column->getTitle();
             if ($column->getSortColumn()) {
-                $output .= '<a href="' . $this->createUrl($column, "asc") . '">order ascending</a>';
-                $output .= '<a href="' . $this->createUrl($column, "desc") . '">order descending</a>';
+                $output .= '<a href="' . $this->createUrl($column, "asc") . '"><i class="material-icons">arrow_drop_down</i></a>';
+                $output .= '<a href="' . $this->createUrl($column, "desc") . '"><i class="material-icons">arrow_drop_up</i></a>';
             }
             $output .= '</th>';
         }
