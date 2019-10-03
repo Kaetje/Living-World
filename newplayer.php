@@ -1,5 +1,10 @@
 <?php
 require_once "autoload.php";
+$database=new database();
+$PlayerRepository=new PlayerRepository($database);
+if(isset($_POST["PlayerName"])){
+    $PlayerRepository->addplayer($_POST["PlayerName"]);
+}
 ?>
     <html>
     <head>
@@ -13,8 +18,8 @@ require "navbar.php"
 ?>
 
 <form method="post">
-    <label for="Player_Name">Player Name:</label><br/>
-    <input id="Player_Name" type="text" name="Player_Name"/><br/><br/>
+    <label for="PlayerName">Player Name:</label><br/>
+    <input id="PlayerName" type="text" name="PlayerName"/><br/>
     <input type="submit" value="Submit"/>
 </form>
     </body>
