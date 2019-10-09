@@ -5,6 +5,7 @@ $PlayerRepository=new PlayerRepository($database);
 if(isset($_POST["PlayerName"])){
     $PlayerRepository->addplayer($_POST["PlayerName"]);
 }
+$playersQuery=$PlayerRepository->getPlayersQuery();
 ?>
     <html>
     <head>
@@ -24,3 +25,11 @@ require "navbar.php"
 </form>
     </body>
     </html>
+
+
+<?php
+$table=new Table('newplayer.php', $PlayerRepository);
+$table->addColumn(new TableColumn('Player name', 'getPlayerName', 'PlayerName'));
+$table->setQuery($playersQuery);
+echo $table->render();
+?>

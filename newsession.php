@@ -1,5 +1,8 @@
 <?php
 require_once "autoload.php";
+$database=new database();
+$playerRepository=new PlayerRepository($database);
+$playersQuery=$playerRepository->getPlayersQuery();
 ?>
     <html>
     <head>
@@ -13,6 +16,11 @@ require "navbar.php"
 ?>
 
 <form method="post">
+    <?php
+    $initiator=new FormSelect('Initiator', 'Initiator', 'Initiator', 'Initiator', $playerRepository);
+    $initiator->setQuery($playersQuery);
+    echo $initiator->renderItem();
+    ?>
     <label for="Initiator">Initiator:</label><br/>
     <select id="Initiator" name="Initiator">
         <option value="1" >Karin</option>
