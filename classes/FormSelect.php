@@ -4,43 +4,26 @@
 class FormSelect
 
 {
-    /**
-     * @var Query
-     */
-    private $query;
-
-        /**
-     * @var Repository
-     */
-    private $repository;
 
     private $label;
-    private $labelHidden;
     private $id;
     private $name;
+    /**
+     * @var array
+     */
+    private $items;
 
-    public function __construct($label, $labelHidden, $id, $name, Repository $repository)
+    public function __construct($label, $id, $name, array $items)
     {
         $this->label = $label;
-        $this->labelHidden = $labelHidden;
         $this->id = $id;
         $this->name = $name;
-        $this->repository = $repository;
-    }
-
-    public function setQuery(Query $query)
-    {
-        return $this->query = $query;
+        $this->items = $items;
     }
 
     public function getLabel()
     {
         return $this->label;
-    }
-
-    public function getLabelHidden()
-    {
-        return $this->labelHidden;
     }
 
     public function getId()
@@ -56,7 +39,7 @@ class FormSelect
     public function renderItem()
     {
         $output = '<label for="';
-        $output .= $this->getLabelHidden();
+        $output .= $this->getId();
         $output .= '">';
         $output .= $this->getLabel();
         $output .= ':</label><br/>';
@@ -65,10 +48,10 @@ class FormSelect
         $output .= '" name="';
         $output .= $this->getname();
         $output .= '">';
-        foreach ($this->repository->getObjectsFromQuery($this->query) as $item)
+        foreach ($this->items as $key=>$item)
         {
             $output .= '<option value="';
-            $output .= $item;
+            $output .= $key;
             $output .= '" >';
             $output .= $item;
             $output .= '</option>';
