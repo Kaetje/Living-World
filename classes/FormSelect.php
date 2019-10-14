@@ -59,8 +59,20 @@ class FormSelect
         $output .= '</select><br/>';
 
         return $output;
-
     }
 
+    public function playerList($label, $id, $name)
+    {
+        $database=new database();
+        $playerRepository=new PlayerRepository($database);
+        $playersQuery=$playerRepository->getPlayersQuery();
+        $playerObjects=$playerRepository->getPlayersFromQuery($playersQuery);
+        $formSelectDataPlayer=[];
+        foreach ($playerObjects as $playerObject){
+            $formSelectDataPlayer[$playerObject->getId()]=$playerObject->getPlayername();
+        }
+        $initiator=new FormSelect($label, $id, $name, $formSelectDataPlayer);
+        echo $initiator->renderItem();
+    }
 
 }

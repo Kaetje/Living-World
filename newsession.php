@@ -7,12 +7,12 @@ $playerRepository=new PlayerRepository($database);
 $playersQuery=$playerRepository->getPlayersQuery();
 $playerObjects=$playerRepository->getPlayersFromQuery($playersQuery);
 $formSelectDataPlayer=[];
-foreach ($playerObjects as $playerObject){
+foreach ($playerObjects as $playerObject)
+{
     $formSelectDataPlayer[$playerObject->getId()]=$playerObject->getPlayername();
 }
 
 $SessionRepository=new SessionRepository($database);
-
 
 if(isset($_POST["Date"])){
     $SessionRepository->addsession($_POST["Initiator"], $_POST["Date"], $_POST["Level_Range"], $_POST["Mission"], $_POST["Buddy"]);
@@ -36,7 +36,7 @@ require "navbar.php"
     $initiator=new FormSelect('Initiator', 'Initiator', 'Initiator', $formSelectDataPlayer);
     echo $initiator->renderItem();
     ?>
-    <label for="Date">Date:</label><br/>
+        <label for="Date">Date:</label><br/>
     <input id="Date" type="date" name="Date"/><br/>
     <label for="Level_Range">Level Range:</label><br/>
     <select id="Level_Range" name="Level_Range">

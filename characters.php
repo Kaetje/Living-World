@@ -3,11 +3,21 @@
 require_once "autoload.php";
 $database=new database();
 $CharacterRepository=new CharacterRepository($database);
-if(isset($_POST["PlayerName"])){
+if(isset($_POST["CharacterName"])){
     $CharacterRepository->addcharacter($_POST["CharacterName"], $_POST["PlayerName"], $_POST["Race"], $_POST["Class"]);
 }
-
 $charactersQuery=$CharacterRepository->getcharactersQuery();
+
+//the following is to create and fill the formSelectDataPlayer
+$playerRepository=new PlayerRepository($database);
+$playersQuery=$playerRepository->getPlayersQuery();
+$playerObjects=$playerRepository->getPlayersFromQuery($playersQuery);
+$formSelectDataPlayer=[];
+foreach ($playerObjects as $playerObject)
+{
+    $formSelectDataPlayer[$playerObject->getId()]=$playerObject->getPlayername();
+}
+
 ?>
 <html>
 <head>
@@ -42,8 +52,10 @@ echo $table->render();
 <form method="post">
     <label for="CharacterName">Character Name:</label><br/>
     <input id="CharacterName" type="text" name="CharacterName"/><br/>
-    <label for="PlayerName">Player Name:</label><br/>
-    <input id="PlayerName" type="text" name="PlayerName"/><br/>
+    <?php
+    $initiator=new FormSelect('Player Name', 'PlayerName', 'PlayerName', $formSelectDataPlayer);
+    echo $initiator->renderItem();
+    ?>
     <label for="Race">Race:</label><br/>
     <input id="Race" type="text" name="Race"/><br/>
     <label for="Class">Class:</label><br/>
