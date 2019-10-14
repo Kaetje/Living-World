@@ -15,7 +15,6 @@ $SessionRepository=new SessionRepository($database);
 
 
 if(isset($_POST["Date"])){
-    //@todo hier dingen inzetten voor submitten van form
     $SessionRepository->addsession($_POST["Initiator"], $_POST["Date"], $_POST["Level_Range"], $_POST["Mission"], $_POST["Buddy"]);
     header('Location: /thanks.php');
     exit;
