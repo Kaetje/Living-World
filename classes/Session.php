@@ -5,7 +5,6 @@ class Session
 {
     private $id;
     private $creationdatetime;
-    // levelrange is Name from level_ranges table
     private $levelrange;
     private $mission;
     private $sessiondate;

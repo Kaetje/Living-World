@@ -21,5 +21,10 @@ class database
         return $query;
     }
 
+    public function insertID()
+    {
+        $id = mysqli_insert_id($this->connection);
+        return $id;
+    }
 
 }

@@ -17,7 +17,8 @@ class EventRepository implements Repository
             $sessionnumber = 'NULL';
         }
         $this->db->query( "INSERT INTO `xpevents` (`ID`, `sessionnumber`, `description`, `xpamount`) VALUES (NULL, $sessionnumber, '$description', $xpamount)");
-        $xpevent_id = mysqli_insert_id($this->connection);
+        //$xpevent_id = mysqli_insert_id($this->connection);
+        $xpevent_id = $this->db->insertID();
         foreach ($characters as $character) {
             $this->db->query("INSERT INTO `characters_xpevents` (`character_id`, `xpevent_id`) VALUES ('$character', '$xpevent_id')");
         }
