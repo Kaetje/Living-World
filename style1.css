@@ -72,3 +72,32 @@ input[type=submit]:hover {
 .navbar a:hover {
     background-color: #3CB371;
 }
+
+.gmbar ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    width: 200px;
+    background-color: #2E8B57;
+    position: fixed;
+    height: 100%;
+    overflow: auto;
+}
+
+.gmbar li a {
+    float: left;
+    display: block;
+    color: white;
+    padding: 8px 16px;
+    text-decoration: none;
+}
+
+.gmbar li a:hover {
+    background-color: #3CB371;
+    color: white;
+}
+
+.gmpage {
+    margin-left:200px;
+    padding:1px 16px;
+}

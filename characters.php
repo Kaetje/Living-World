@@ -31,8 +31,6 @@ require "navbar.php"
 ?>
 
 
-<a href="export.php">Export table to WikiMedia format.</a><br />
-<br />
 
 <?php
 $table=new Table('characters.php', $CharacterRepository);
@@ -48,7 +46,7 @@ echo $table->render();
 ?>
 
 
-
+<h2>Add a new character:</h2>
 <form method="post">
     <label for="CharacterName">Character Name:</label><br/>
     <input id="CharacterName" type="text" name="CharacterName"/><br/>

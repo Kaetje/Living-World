@@ -20,9 +20,11 @@ $characters=$CharacterRepository->getcharacters();
 
 <body>
 <?php
-require "navbar.php"
+require "navbar.php";
+require "gmbar.php"
 ?>
 
+<div class="gmpage">
 <form method="post">
     <label for="sessionnumber">Session Number:</label> <input id="sessionnumber" type="text" name="sessionnumber"/><br/>
     <label for="description">Description:</label> <input id="description" type="text" name="description"/><br/>
@@ -36,4 +38,6 @@ require "navbar.php"
 
     <input type="submit" value="Submit"/>
 </form>
+</div>
 </body>
+

@@ -29,7 +29,7 @@ require "navbar.php"
 
 <?php
 $table=new Table('newplayer.php', $PlayerRepository);
-$table->addColumn(new TableColumn('Player name', 'getPlayerName', 'PlayerName'));
+$table->addColumn(new TableColumn('Current Players:', 'getPlayerName', 'PlayerName'));
 $table->setQuery($playersQuery);
 echo $table->render();
 ?>

@@ -12,9 +12,9 @@ class Session
     private $initiator;
     private $buddy;
     private $marlon;
-    private $players=[];
+    private $players;
 
-    public function __construct($id, $creationdatetime, $levelrange, $mission, $sessiondate, $approved, $initiator, $buddy, $marlon, array $players)
+    public function __construct($id, $creationdatetime, $levelrange, $mission, $sessiondate, $approved, $initiator, $buddy, $marlon, $players)
     {
         $this->id = $id;
         $this->creationdatetime = $creationdatetime;
@@ -73,7 +73,7 @@ class Session
         return $this->marlon;
     }
 
-    public function getPlayers(): array
+    public function getPlayers()
     {
         return $this->players;
     }
