@@ -8,7 +8,7 @@ if(isset($_POST["SessionDate"])){
     $sessionRepository->approveSession($_POST["SessionDate"]);
 }
 
-//the following is to create and fill the formSelectDataPlayer
+//the following is to create and fill the formSelectDataSession
 $sessionObjects=$sessionRepository->getSessionsFromQuery($sessionsQuery);
 $formSelectDataSession=[];
 foreach ($sessionObjects as $sessionObject)

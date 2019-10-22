@@ -62,4 +62,9 @@ class SessionRepository implements Repository
     {
         $this->db->query( "UPDATE `sessions` SET `Stamp_of_approval`= '1' WHERE `ID` = $id");
     }
+
+    function addPlayer ($id, $player)
+    {
+        $this->db->query("INSERT INTO `sessions_players` (`playerID`, `sessionID`, `rol`) VALUES ('$player', '$id', '4')");
+    }
 }

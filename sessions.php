@@ -5,6 +5,28 @@ $database=new database();
 $sessionRepository=new SessionRepository($database);
 $sessionsQuery=$sessionRepository->getSessionsQuery();
 
+if(isset($_POST["SessionDate"])){
+    $sessionRepository->addPlayer($_POST["SessionDate"], $_POST["PlayerName"]);
+}
+
+//the following is to create and fill the formSelectDataSession
+$sessionObjects=$sessionRepository->getSessionsFromQuery($sessionsQuery);
+$formSelectDataSession=[];
+foreach ($sessionObjects as $sessionObject)
+{
+    $formSelectDataSession[$sessionObject->getId()]=$sessionObject->getSessiondate();
+}
+
+//the following is to create and fill the formSelectDataPlayer
+$playerRepository=new PlayerRepository($database);
+$playersQuery=$playerRepository->getPlayersQuery();
+$playerObjects=$playerRepository->getPlayersFromQuery($playersQuery);
+$formSelectDataPlayer=[];
+foreach ($playerObjects as $playerObject)
+{
+    $formSelectDataPlayer[$playerObject->getId()]=$playerObject->getPlayername();
+}
+
 ?>
     <html>
     <head>
@@ -16,6 +38,19 @@ $sessionsQuery=$sessionRepository->getSessionsQuery();
 <?php
 require "navbar.php"
 ?>
+
+<h2>Sign up for a session:</h2>
+<form method="post">
+    <?php
+    $session=new FormSelect('Session Date', 'SessionDate', 'SessionDate', $formSelectDataSession);
+    echo $session->renderItem();
+    ?>
+    <?php
+    $initiator=new FormSelect('Player Name', 'PlayerName', 'PlayerName', $formSelectDataPlayer);
+    echo $initiator->renderItem();
+    ?>
+    <input type="submit" value="Sign up!"/>
+</form>
 
 <?php
 $table=new Table('sessions.php', $sessionRepository);
