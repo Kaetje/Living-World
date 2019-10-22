@@ -15,7 +15,7 @@ if (!count($sessions)) {
 $session = $sessions[0];
 
 if (isset($_POST["PlayerName"])) {
-    $sessionRepository->addPlayer($session->getSessiondate(), $_POST["PlayerName"]);
+    $sessionRepository->addPlayer($session->getId(), $_POST["PlayerName"]);
     $sessions = $sessionRepository->getSessionsFromQuery($query);
     /** @var Session $session */
     $session = $sessions[0];
