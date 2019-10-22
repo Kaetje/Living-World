@@ -77,4 +77,9 @@ class Session
         return '';
     }
 
+    public function hasPriority(): bool
+    {
+        $sessionTime = new DateTimeImmutable($this->getCreationdatetime());
+        return $sessionTime > new DateTimeImmutable('-3 days');
+    }
 }

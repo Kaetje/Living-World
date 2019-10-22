@@ -41,7 +41,7 @@ class SessionRepository implements Repository
         return $objects;
     }
 
-    function getSessionsQuery(): QueryInterface
+    function getSessionsQuery(): Query
     {
         return new Query("
                             select sessions.ID as id, Creation_datetime as creationdatetime, level_ranges.Name as levelrange, Mission as mission, Session_date as sessiondate, Stamp_of_approval as approved
