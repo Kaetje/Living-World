@@ -46,7 +46,7 @@ require "gmbar.php"
     $table=new Table('sessions.php', $sessionRepository);
     $table->addColumn(new TableColumn('Date', 'getSessiondate', 'Date'));
     $table->addColumn(new TableColumn('Level range', 'getLevelrange', 'Level_range'));
-    $table->addColumn(new TableColumn('Approved by GM', 'getApproved', 'Approved'));
+    $table->addColumn(new TableColumnBoolean('Approved by GM', 'getApproved', 'Approved'));
     $table->addColumn(new TableColumn('Mission', 'getMission', 'Mission'));
     $table->addColumn(new TableColumn('Initiator', 'getInitiator', 'Initiator'));
     $table->addColumn(new TableColumn('Buddy', 'getBuddy', 'Buddy'));
