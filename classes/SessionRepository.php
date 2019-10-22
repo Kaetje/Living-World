@@ -22,7 +22,7 @@ class SessionRepository implements Repository
     /**
      * @return Session[]
      */
-    function getSessionsFromQuery(Query $query): array
+    function getSessionsFromQuery(QueryInterface $query): array
     {
         $query = $this->db->query(
             $query->getQuery());
@@ -41,7 +41,7 @@ class SessionRepository implements Repository
         return $objects;
     }
 
-    function getSessionsQuery(): Query
+    function getSessionsQuery(): QueryInterface
     {
         return new Query("
                             select sessions.ID as id, Creation_datetime as creationdatetime, level_ranges.Name as levelrange, Mission as mission, Session_date as sessiondate, Stamp_of_approval as approved
@@ -52,7 +52,7 @@ class SessionRepository implements Repository
                             ");
     }
 
-    public function getObjectsFromQuery(Query $query): array
+    public function getObjectsFromQuery(QueryInterface $query): array
     {
         return $this->getSessionsFromQuery($query);
     }

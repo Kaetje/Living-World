@@ -1,29 +1,39 @@
 <?php
 
 
-class Query
+class Query implements QueryInterface
 {
     private $baseSql;
     private $column;
     private $direction;
+    private $where;
 
     public function __construct($baseSql)
     {
         $this->baseSql = $baseSql;
     }
 
-    public function addOrderBy($column, $direction)
+    public function addOrderBy($column, $direction = 'ASC')
     {
         $this->column = $column;
         $this->direction = $direction;
     }
 
+    public function addWhere($where)
+    {
+        $this->where = $where;
+    }
+
     public function getQuery()
     {
-        if ($this->column) {
-            return $this->baseSql . ' ORDER BY ' . $this->column . ' ' . $this->direction;
+        $sql = $this->baseSql;
+        if ($this->where) {
+           $sql .= ' WHERE ' . $this->where;
         }
-        return $this->baseSql;
+        if ($this->column) {
+            $sql .= ' ORDER BY ' . $this->column . ' ' . $this->direction;
+        }
+        return $sql;
     }
 
 }

@@ -18,8 +18,8 @@ foreach ($sessionObjects as $sessionObject) {
 
 //the following is to create and fill the formSelectDataPlayer
 $playerRepository = new PlayerRepository($database);
-$playersQuery = $playerRepository->getPlayersQuery();
-$playerObjects = $playerRepository->getPlayersFromQuery($playersQuery);
+
+$playerObjects = $playerRepository->getPlayersFromQuery(new PriorityPlayerQuery($database));
 $formSelectDataPlayer = [];
 foreach ($playerObjects as $playerObject) {
     $formSelectDataPlayer[$playerObject->getId()] = $playerObject->getPlayername();

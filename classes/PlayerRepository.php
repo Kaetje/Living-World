@@ -17,7 +17,7 @@ class PlayerRepository implements Repository
         $this->db->query("INSERT INTO `players` (`ID`, `PlayerName`) VALUES (NULL, '$playername')");
     }
 
-    public function getObjectsFromQuery(Query $query): array
+    public function getObjectsFromQuery(QueryInterface $query): array
     {
         return $this->getPlayersFromQuery($query);
     }
@@ -25,7 +25,7 @@ class PlayerRepository implements Repository
     /**
      * @return Player[]
      */
-    function getPlayersFromQuery(Query $query): array
+    function getPlayersFromQuery(QueryInterface $query): array
     {
         $query = $this->db->query(
             $query->getQuery());
@@ -37,7 +37,7 @@ class PlayerRepository implements Repository
         return $objects;
     }
 
-    function getPlayersQuery(): Query
+    function getPlayersQuery(): QueryInterface
     {
         return new Query("SELECT PlayerName as playername, ID as id
                 FROM `players` ");
