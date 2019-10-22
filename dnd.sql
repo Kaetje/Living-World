@@ -23,15 +23,17 @@ SET time_zone = "+00:00";
 --
 
 DROP TABLE IF EXISTS `characters`;
-CREATE TABLE IF NOT EXISTS `characters` (
-                                            `ID` int(11) NOT NULL AUTO_INCREMENT,
-                                            `CharacterName` varchar(255) NOT NULL,
-                                            `PlayerName` varchar(255) NOT NULL,
-                                            `Race` varchar(255) DEFAULT NULL,
-                                            `Class` varchar(255) DEFAULT NULL,
-                                            `Status` varchar(255) DEFAULT NULL,
-                                            PRIMARY KEY (`ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+CREATE TABLE IF NOT EXISTS `characters`
+(
+    `ID`            int(11)      NOT NULL AUTO_INCREMENT,
+    `CharacterName` varchar(255) NOT NULL,
+    `PlayerName`    varchar(255) NOT NULL,
+    `Race`          varchar(255) DEFAULT NULL,
+    `Class`         varchar(255) DEFAULT NULL,
+    `Status`        varchar(255) DEFAULT NULL,
+    PRIMARY KEY (`ID`)
+) ENGINE = InnoDB
+  DEFAULT CHARSET = latin1;
 
 -- --------------------------------------------------------
 
@@ -40,11 +42,13 @@ CREATE TABLE IF NOT EXISTS `characters` (
 --
 
 DROP TABLE IF EXISTS `characters_xpevents`;
-CREATE TABLE IF NOT EXISTS `characters_xpevents` (
-                                                     `character_id` int(11) NOT NULL,
-                                                     `xpevent_id` int(11) NOT NULL,
-                                                     UNIQUE KEY `character_id` (`character_id`,`xpevent_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+CREATE TABLE IF NOT EXISTS `characters_xpevents`
+(
+    `character_id` int(11) NOT NULL,
+    `xpevent_id`   int(11) NOT NULL,
+    UNIQUE KEY `character_id` (`character_id`, `xpevent_id`)
+) ENGINE = InnoDB
+  DEFAULT CHARSET = latin1;
 
 -- --------------------------------------------------------
 
@@ -53,15 +57,17 @@ CREATE TABLE IF NOT EXISTS `characters_xpevents` (
 --
 
 DROP TABLE IF EXISTS `level_ranges`;
-CREATE TABLE IF NOT EXISTS `level_ranges` (
-                                              `ID` int(11) NOT NULL AUTO_INCREMENT,
-                                              `Name` varchar(255) NOT NULL,
-                                              `Min` int(2) NOT NULL,
-                                              `Max` int(2) NOT NULL,
-                                              PRIMARY KEY (`ID`),
-                                              UNIQUE KEY `Min` (`Min`,`Max`) USING BTREE,
-                                              UNIQUE KEY `Name` (`Name`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+CREATE TABLE IF NOT EXISTS `level_ranges`
+(
+    `ID`   int(11)      NOT NULL AUTO_INCREMENT,
+    `Name` varchar(255) NOT NULL,
+    `Min`  int(2)       NOT NULL,
+    `Max`  int(2)       NOT NULL,
+    PRIMARY KEY (`ID`),
+    UNIQUE KEY `Min` (`Min`, `Max`) USING BTREE,
+    UNIQUE KEY `Name` (`Name`)
+) ENGINE = InnoDB
+  DEFAULT CHARSET = latin1;
 
 -- --------------------------------------------------------
 
@@ -70,12 +76,14 @@ CREATE TABLE IF NOT EXISTS `level_ranges` (
 --
 
 DROP TABLE IF EXISTS `players`;
-CREATE TABLE IF NOT EXISTS `players` (
-                                         `ID` int(11) NOT NULL AUTO_INCREMENT,
-                                         `PlayerName` varchar(255) NOT NULL,
-                                         PRIMARY KEY (`ID`),
-                                         UNIQUE KEY `PlayerName` (`PlayerName`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+CREATE TABLE IF NOT EXISTS `players`
+(
+    `ID`         int(11)      NOT NULL AUTO_INCREMENT,
+    `PlayerName` varchar(255) NOT NULL,
+    PRIMARY KEY (`ID`),
+    UNIQUE KEY `PlayerName` (`PlayerName`)
+) ENGINE = InnoDB
+  DEFAULT CHARSET = latin1;
 
 -- --------------------------------------------------------
 
@@ -84,11 +92,13 @@ CREATE TABLE IF NOT EXISTS `players` (
 --
 
 DROP TABLE IF EXISTS `players_characters`;
-CREATE TABLE IF NOT EXISTS `players_characters` (
-                                                    `player_id` int(11) NOT NULL,
-                                                    `character_id` int(11) NOT NULL,
-                                                    UNIQUE KEY `character_id` (`character_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+CREATE TABLE IF NOT EXISTS `players_characters`
+(
+    `player_id`    int(11) NOT NULL,
+    `character_id` int(11) NOT NULL,
+    UNIQUE KEY `character_id` (`character_id`)
+) ENGINE = InnoDB
+  DEFAULT CHARSET = latin1;
 
 -- --------------------------------------------------------
 
@@ -97,16 +107,18 @@ CREATE TABLE IF NOT EXISTS `players_characters` (
 --
 
 DROP TABLE IF EXISTS `sessions`;
-CREATE TABLE IF NOT EXISTS `sessions` (
-                                          `ID` int(11) NOT NULL AUTO_INCREMENT,
-                                          `Session_date` date NOT NULL,
-                                          `Level_rangeID` int(11) NOT NULL,
-                                          `Mission` varchar(255) NOT NULL,
-                                          `Creation_datetime` datetime NOT NULL,
-                                          `Stamp_of_approval` tinyint(1) NOT NULL,
-                                          PRIMARY KEY (`ID`),
-                                          KEY `Level_rangeID` (`Level_rangeID`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+CREATE TABLE IF NOT EXISTS `sessions`
+(
+    `ID`                int(11)      NOT NULL AUTO_INCREMENT,
+    `Session_date`      date         NOT NULL,
+    `Level_rangeID`     int(11)      NOT NULL,
+    `Mission`           varchar(255) NOT NULL,
+    `Creation_datetime` datetime     NOT NULL,
+    `Stamp_of_approval` tinyint(1)   NOT NULL,
+    PRIMARY KEY (`ID`),
+    KEY `Level_rangeID` (`Level_rangeID`)
+) ENGINE = InnoDB
+  DEFAULT CHARSET = latin1;
 
 -- --------------------------------------------------------
 
@@ -115,13 +127,15 @@ CREATE TABLE IF NOT EXISTS `sessions` (
 --
 
 DROP TABLE IF EXISTS `sessions_players`;
-CREATE TABLE IF NOT EXISTS `sessions_players` (
-                                                  `sessionID` int(11) NOT NULL,
-                                                  `playerID` int(11) NOT NULL,
-                                                  `rol` int(11) NOT NULL,
-                                                  KEY `playerID` (`playerID`),
-                                                  KEY `sessionID` (`sessionID`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+CREATE TABLE IF NOT EXISTS `sessions_players`
+(
+    `sessionID` int(11) NOT NULL,
+    `playerID`  int(11) NOT NULL,
+    `rol`       int(11) NOT NULL,
+    KEY `playerID` (`playerID`),
+    KEY `sessionID` (`sessionID`)
+) ENGINE = InnoDB
+  DEFAULT CHARSET = latin1;
 
 -- --------------------------------------------------------
 
@@ -130,13 +144,15 @@ CREATE TABLE IF NOT EXISTS `sessions_players` (
 --
 
 DROP TABLE IF EXISTS `xpevents`;
-CREATE TABLE IF NOT EXISTS `xpevents` (
-                                          `ID` int(11) NOT NULL AUTO_INCREMENT,
-                                          `sessionnumber` int(11) DEFAULT NULL,
-                                          `description` varchar(255) NOT NULL,
-                                          `xpamount` int(11) NOT NULL,
-                                          PRIMARY KEY (`ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+CREATE TABLE IF NOT EXISTS `xpevents`
+(
+    `ID`            int(11)      NOT NULL AUTO_INCREMENT,
+    `sessionnumber` int(11) DEFAULT NULL,
+    `description`   varchar(255) NOT NULL,
+    `xpamount`      int(11)      NOT NULL,
+    PRIMARY KEY (`ID`)
+) ENGINE = InnoDB
+  DEFAULT CHARSET = latin1;
 
 --
 -- Constraints for dumped tables

@@ -1,8 +1,6 @@
 <?php
 
 
-
-
 class CharacterRepository implements Repository
 {
     /** @var database */
@@ -28,7 +26,7 @@ class CharacterRepository implements Repository
                 GROUP BY charid
                 ORDER BY charname");
         $characters = mysqli_fetch_all($query, MYSQLI_ASSOC);
-        $objects=[];
+        $objects = [];
         foreach ($characters as $character) {
             $objects[] = new Character($character["charid"], $character["playername"], $character["charname"], $character["race"], $character["class"], $character["XP"], $character["status"]);
         }
@@ -37,7 +35,7 @@ class CharacterRepository implements Repository
 
     function addcharacter($charname, $playername, $race, $class)
     {
-        $this->db->query( "INSERT INTO `characters` (`ID`, `CharacterName`, `PlayerName`, `Race`, `Class`, `Status`) VALUES (NULL, '$charname', '$playername', '$race', '$class', 'Ready')");
+        $this->db->query("INSERT INTO `characters` (`ID`, `CharacterName`, `PlayerName`, `Race`, `Class`, `Status`) VALUES (NULL, '$charname', '$playername', '$race', '$class', 'Ready')");
         $character_id = $this->db->insertID();
         $this->db->query("INSERT INTO `players_characters` (`player_id`, `character_id`) VALUES ('$playername', '$character_id')");
     }
@@ -65,7 +63,7 @@ class CharacterRepository implements Repository
         $query = $this->db->query(
             $query->getQuery());
         $characters = mysqli_fetch_all($query, MYSQLI_ASSOC);
-        $objects=[];
+        $objects = [];
         foreach ($characters as $character) {
             $objects[] = new Character($character["charid"], $character["playername"], $character["charname"], $character["race"], $character["class"], $character["XP"], $character["status"]);
         }

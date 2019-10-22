@@ -13,7 +13,7 @@ class SessionRepository implements Repository
 
     function addsession($initiator, $sessiondate, $levelrange, $mission, $buddy)
     {
-        $this->db->query( "INSERT INTO `sessions` (`ID`, `Creation_datetime`, `Level_rangeID`, `Mission`, `Session_date`) VALUES (NULL, CURRENT_TIMESTAMP, $levelrange, '$mission', '$sessiondate')");
+        $this->db->query("INSERT INTO `sessions` (`ID`, `Creation_datetime`, `Level_rangeID`, `Mission`, `Session_date`) VALUES (NULL, CURRENT_TIMESTAMP, $levelrange, '$mission', '$sessiondate')");
         $session_id = $this->db->insertID();
         $this->db->query("INSERT INTO `sessions_players` (`playerID`, `sessionID`, `rol`) VALUES ('$initiator', '$session_id', '1')");
         $this->db->query("INSERT INTO `sessions_players` (`playerID`, `sessionID`, `rol`) VALUES ('$buddy', '$session_id', '2')");
@@ -27,7 +27,7 @@ class SessionRepository implements Repository
         $query = $this->db->query(
             $query->getQuery());
         $sessions = mysqli_fetch_all($query, MYSQLI_ASSOC);
-        $objects=[];
+        $objects = [];
         foreach ($sessions as $session) {
             $objects[] = new Session($session["id"], $session["creationdatetime"], $session["levelrange"], $session["mission"], $session["sessiondate"], $session["approved"], $session["initiator"], $session["buddy"], $session["marlon"], $session["players"]);
         }
@@ -58,12 +58,12 @@ class SessionRepository implements Repository
         return $this->getSessionsFromQuery($query);
     }
 
-    function approveSession ($id)
+    function approveSession($id)
     {
-        $this->db->query( "UPDATE `sessions` SET `Stamp_of_approval`= '1' WHERE `ID` = $id");
+        $this->db->query("UPDATE `sessions` SET `Stamp_of_approval`= '1' WHERE `ID` = $id");
     }
 
-    function addPlayer ($id, $player)
+    function addPlayer($id, $player)
     {
         $this->db->query("INSERT INTO `sessions_players` (`playerID`, `sessionID`, `rol`) VALUES ('$player', '$id', '4')");
     }

@@ -14,7 +14,7 @@ class PlayerRepository implements Repository
 
     function addplayer($playername)
     {
-        $this->db->query( "INSERT INTO `players` (`ID`, `PlayerName`) VALUES (NULL, '$playername')");
+        $this->db->query("INSERT INTO `players` (`ID`, `PlayerName`) VALUES (NULL, '$playername')");
     }
 
     public function getObjectsFromQuery(Query $query): array
@@ -30,7 +30,7 @@ class PlayerRepository implements Repository
         $query = $this->db->query(
             $query->getQuery());
         $players = mysqli_fetch_all($query, MYSQLI_ASSOC);
-        $objects=[];
+        $objects = [];
         foreach ($players as $player) {
             $objects[] = new Player($player["playername"], $player["id"]);
         }

@@ -49,8 +49,7 @@ class FormSelect
         $output .= $this->getname();
         $output .= '">';
         $output .= '<option value="-"></option>';
-        foreach ($this->items as $key=>$item)
-        {
+        foreach ($this->items as $key => $item) {
             $output .= '<option value="';
             $output .= $key;
             $output .= '" >';
@@ -64,15 +63,15 @@ class FormSelect
 
     public function playerList($label, $id, $name)
     {
-        $database=new database();
-        $playerRepository=new PlayerRepository($database);
-        $playersQuery=$playerRepository->getPlayersQuery();
-        $playerObjects=$playerRepository->getPlayersFromQuery($playersQuery);
-        $formSelectDataPlayer=[];
-        foreach ($playerObjects as $playerObject){
-            $formSelectDataPlayer[$playerObject->getId()]=$playerObject->getPlayername();
+        $database = new database();
+        $playerRepository = new PlayerRepository($database);
+        $playersQuery = $playerRepository->getPlayersQuery();
+        $playerObjects = $playerRepository->getPlayersFromQuery($playersQuery);
+        $formSelectDataPlayer = [];
+        foreach ($playerObjects as $playerObject) {
+            $formSelectDataPlayer[$playerObject->getId()] = $playerObject->getPlayername();
         }
-        $initiator=new FormSelect($label, $id, $name, $formSelectDataPlayer);
+        $initiator = new FormSelect($label, $id, $name, $formSelectDataPlayer);
         echo $initiator->renderItem();
     }
 

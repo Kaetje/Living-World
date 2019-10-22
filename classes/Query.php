@@ -12,14 +12,16 @@ class Query
         $this->baseSql = $baseSql;
     }
 
-    public function addOrderBy($column, $direction){
-        $this->column=$column;
-        $this->direction=$direction;
+    public function addOrderBy($column, $direction)
+    {
+        $this->column = $column;
+        $this->direction = $direction;
     }
 
-    public function getQuery(){
-        if ($this->column){
-            return $this->baseSql.' ORDER BY '.$this->column.' '.$this->direction;
+    public function getQuery()
+    {
+        if ($this->column) {
+            return $this->baseSql . ' ORDER BY ' . $this->column . ' ' . $this->direction;
         }
         return $this->baseSql;
     }

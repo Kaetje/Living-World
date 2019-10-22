@@ -5,9 +5,9 @@ require_once "autoload.php";
 
 #$characters = getcharacters();
 
-$database=new database();
-$CharacterRepository=new CharacterRepository($database);
-$characters=$CharacterRepository->getcharacters();
+$database = new database();
+$CharacterRepository = new CharacterRepository($database);
+$characters = $CharacterRepository->getcharacters();
 
 echo '<pre>';
 echo outputFullTable($characters);

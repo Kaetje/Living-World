@@ -1,19 +1,18 @@
 <?php
 require_once "autoload.php";
-$database=new database();
-$sessionRepository=new SessionRepository($database);
-$sessionsQuery=$sessionRepository->getSessionsQuery();
+$database = new database();
+$sessionRepository = new SessionRepository($database);
+$sessionsQuery = $sessionRepository->getSessionsQuery();
 
-if(isset($_POST["SessionDate"])){
+if (isset($_POST["SessionDate"])) {
     $sessionRepository->approveSession($_POST["SessionDate"]);
 }
 
 //the following is to create and fill the formSelectDataSession
-$sessionObjects=$sessionRepository->getSessionsFromQuery($sessionsQuery);
-$formSelectDataSession=[];
-foreach ($sessionObjects as $sessionObject)
-{
-    $formSelectDataSession[$sessionObject->getId()]=$sessionObject->getSessiondate();
+$sessionObjects = $sessionRepository->getSessionsFromQuery($sessionsQuery);
+$formSelectDataSession = [];
+foreach ($sessionObjects as $sessionObject) {
+    $formSelectDataSession[$sessionObject->getId()] = $sessionObject->getSessiondate();
 }
 
 
@@ -35,7 +34,7 @@ require "gmbar.php"
     <h2>Approve a session:</h2>
     <form method="post">
         <?php
-        $session=new FormSelect('Session Date', 'SessionDate', 'SessionDate', $formSelectDataSession);
+        $session = new FormSelect('Session Date', 'SessionDate', 'SessionDate', $formSelectDataSession);
         echo $session->renderItem();
         ?>
         <input type="submit" value="Approve"/>
@@ -43,7 +42,7 @@ require "gmbar.php"
 
     <h2>Session Overview:</h2>
     <?php
-    $table=new Table('sessions.php', $sessionRepository);
+    $table = new Table('sessions.php', $sessionRepository);
     $table->addColumn(new TableColumn('Date', 'getSessiondate', 'Date'));
     $table->addColumn(new TableColumn('Level range', 'getLevelrange', 'Level_range'));
     $table->addColumn(new TableColumnBoolean('Approved by GM', 'getApproved', 'Approved'));

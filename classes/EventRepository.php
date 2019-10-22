@@ -3,7 +3,7 @@
 
 class EventRepository implements Repository
 {
-   /** @var database */
+    /** @var database */
     private $db;
 
     public function __construct(database $db)
@@ -13,10 +13,10 @@ class EventRepository implements Repository
 
     function addevent($sessionnumber, $description, $xpamount, $characters)
     {
-        if ($sessionnumber == ''){
+        if ($sessionnumber == '') {
             $sessionnumber = 'NULL';
         }
-        $this->db->query( "INSERT INTO `xpevents` (`ID`, `sessionnumber`, `description`, `xpamount`) VALUES (NULL, $sessionnumber, '$description', $xpamount)");
+        $this->db->query("INSERT INTO `xpevents` (`ID`, `sessionnumber`, `description`, `xpamount`) VALUES (NULL, $sessionnumber, '$description', $xpamount)");
         //$xpevent_id = mysqli_insert_id($this->connection);
         $xpevent_id = $this->db->insertID();
         foreach ($characters as $character) {
@@ -33,7 +33,7 @@ class EventRepository implements Repository
         $query = $this->db->query(
             $query->getQuery());
         $events = mysqli_fetch_all($query, MYSQLI_ASSOC);
-        $objects=[];
+        $objects = [];
         foreach ($events as $event) {
             $objects[] = new Event($event["id"], $event["sessionnumber"], $event["description"], $event["XP"]);
         }
@@ -48,7 +48,8 @@ class EventRepository implements Repository
                 WHERE characters_xpevents.character_id = $charid");
     }
 
-    function getObjectsFromQuery(Query $query): array{
+    function getObjectsFromQuery(Query $query): array
+    {
         return $this->getEventsFromQuery($query);
     }
 }

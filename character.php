@@ -1,11 +1,11 @@
 <?php
-$key=$_GET["key"];
+$key = $_GET["key"];
 require_once "autoload.php";
-$database=new database();
-$CharacterRepository=new CharacterRepository($database);
-$EventRepository=new EventRepository($database);
-$character=$CharacterRepository->getcharacter($key);
-$EventsQuery=$EventRepository->getEventsQuery($key);
+$database = new database();
+$CharacterRepository = new CharacterRepository($database);
+$EventRepository = new EventRepository($database);
+$character = $CharacterRepository->getcharacter($key);
+$EventsQuery = $EventRepository->getEventsQuery($key);
 
 
 ?>
@@ -22,20 +22,20 @@ require "navbar.php"
 ?>
 
 <h1 class="charname"><?php echo $character->getCharname(); ?></h1>
-<h2><?php echo 'Level '; echo $character->getLevel(); ?> - <?php echo $character->getXP(); echo ' XP' ; ?></h2>
+<h2><?php echo 'Level ';
+    echo $character->getLevel(); ?> - <?php echo $character->getXP();
+    echo ' XP'; ?></h2>
 <p>Eigendom van: <?php echo $character->getPlayerName(); ?></p>
 
 
 <?php
-$table=new Table('character.php?key='.$key, $EventRepository);
+$table = new Table('character.php?key=' . $key, $EventRepository);
 $table->addColumn(new TableColumn('Session number', 'getSessionnumber', 'sessionnumber'));
 $table->addColumn(new TableColumn('Description', 'getDescription', 'description'));
 $table->addColumn(new TableColumn('XP amount', 'getXP', 'XP'));
 $table->setQuery($EventsQuery);
 echo $table->render();
 ?>
-
-
 
 
 </body>

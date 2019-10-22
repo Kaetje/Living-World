@@ -9,7 +9,7 @@ class TableColumn
     private $dataFunction;
     private $sortColumn;
 
-    public function __construct($title, $dataFunction, $sortColumn="")
+    public function __construct($title, $dataFunction, $sortColumn = "")
     {
         $this->title = $title;
         $this->dataFunction = $dataFunction;
@@ -28,7 +28,7 @@ class TableColumn
 
     public function renderItem($item)
     {
-        return call_user_func([$item,$this->dataFunction]);
+        return call_user_func([$item, $this->dataFunction]);
     }
 
     public function getSortColumn()

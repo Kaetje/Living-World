@@ -7,7 +7,7 @@ class Event
     private $sessionnumber;
     private $description;
     private $XP;
-    private $characternames=[];
+    private $characternames = [];
 
     public function __construct($id, $sessionnumber, $description, $XP, array $characternames = [])
     {

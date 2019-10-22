@@ -1,21 +1,20 @@
 <?php
 
 require_once "autoload.php";
-$database=new database();
-$CharacterRepository=new CharacterRepository($database);
-if(isset($_POST["CharacterName"])){
+$database = new database();
+$CharacterRepository = new CharacterRepository($database);
+if (isset($_POST["CharacterName"])) {
     $CharacterRepository->addcharacter($_POST["CharacterName"], $_POST["PlayerName"], $_POST["Race"], $_POST["Class"]);
 }
-$charactersQuery=$CharacterRepository->getcharactersQuery();
+$charactersQuery = $CharacterRepository->getcharactersQuery();
 
 //the following is to create and fill the formSelectDataPlayer
-$playerRepository=new PlayerRepository($database);
-$playersQuery=$playerRepository->getPlayersQuery();
-$playerObjects=$playerRepository->getPlayersFromQuery($playersQuery);
-$formSelectDataPlayer=[];
-foreach ($playerObjects as $playerObject)
-{
-    $formSelectDataPlayer[$playerObject->getId()]=$playerObject->getPlayername();
+$playerRepository = new PlayerRepository($database);
+$playersQuery = $playerRepository->getPlayersQuery();
+$playerObjects = $playerRepository->getPlayersFromQuery($playersQuery);
+$formSelectDataPlayer = [];
+foreach ($playerObjects as $playerObject) {
+    $formSelectDataPlayer[$playerObject->getId()] = $playerObject->getPlayername();
 }
 
 ?>
@@ -33,7 +32,7 @@ require "navbar.php"
 
 
 <?php
-$table=new Table('characters.php', $CharacterRepository);
+$table = new Table('characters.php', $CharacterRepository);
 $table->addColumn(new TableColumnCharName('Character name'));
 $table->addColumn(new TableColumn('Player name', 'getPlayerName', 'PlayerName'));
 $table->addColumn(new TableColumn('Race', 'getRace', 'Race'));
@@ -51,7 +50,7 @@ echo $table->render();
     <label for="CharacterName">Character Name:</label><br/>
     <input id="CharacterName" type="text" name="CharacterName"/><br/>
     <?php
-    $initiator=new FormSelect('Player Name', 'PlayerName', 'PlayerName', $formSelectDataPlayer);
+    $initiator = new FormSelect('Player Name', 'PlayerName', 'PlayerName', $formSelectDataPlayer);
     echo $initiator->renderItem();
     ?>
     <label for="Race">Race:</label><br/>

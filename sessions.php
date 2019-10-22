@@ -1,40 +1,38 @@
 <?php
 
 require_once "autoload.php";
-$database=new database();
-$sessionRepository=new SessionRepository($database);
-$sessionsQuery=$sessionRepository->getSessionsQuery();
+$database = new database();
+$sessionRepository = new SessionRepository($database);
+$sessionsQuery = $sessionRepository->getSessionsQuery();
 
-if(isset($_POST["SessionDate"])){
+if (isset($_POST["SessionDate"])) {
     $sessionRepository->addPlayer($_POST["SessionDate"], $_POST["PlayerName"]);
 }
 
 //the following is to create and fill the formSelectDataSession
-$sessionObjects=$sessionRepository->getSessionsFromQuery($sessionsQuery);
-$formSelectDataSession=[];
-foreach ($sessionObjects as $sessionObject)
-{
-    $formSelectDataSession[$sessionObject->getId()]=$sessionObject->getSessiondate();
+$sessionObjects = $sessionRepository->getSessionsFromQuery($sessionsQuery);
+$formSelectDataSession = [];
+foreach ($sessionObjects as $sessionObject) {
+    $formSelectDataSession[$sessionObject->getId()] = $sessionObject->getSessiondate();
 }
 
 //the following is to create and fill the formSelectDataPlayer
-$playerRepository=new PlayerRepository($database);
-$playersQuery=$playerRepository->getPlayersQuery();
-$playerObjects=$playerRepository->getPlayersFromQuery($playersQuery);
-$formSelectDataPlayer=[];
-foreach ($playerObjects as $playerObject)
-{
-    $formSelectDataPlayer[$playerObject->getId()]=$playerObject->getPlayername();
+$playerRepository = new PlayerRepository($database);
+$playersQuery = $playerRepository->getPlayersQuery();
+$playerObjects = $playerRepository->getPlayersFromQuery($playersQuery);
+$formSelectDataPlayer = [];
+foreach ($playerObjects as $playerObject) {
+    $formSelectDataPlayer[$playerObject->getId()] = $playerObject->getPlayername();
 }
 
 ?>
-    <html>
-    <head>
-        <link rel="stylesheet" type="text/css" href="style1.css">
-        <title>Sessions Overview</title>
-    </head>
+<html>
+<head>
+    <link rel="stylesheet" type="text/css" href="style1.css">
+    <title>Sessions Overview</title>
+</head>
 
-    <body>
+<body>
 <?php
 require "navbar.php"
 ?>
@@ -42,18 +40,18 @@ require "navbar.php"
 <h2>Sign up for a session:</h2>
 <form method="post">
     <?php
-    $session=new FormSelect('Session Date', 'SessionDate', 'SessionDate', $formSelectDataSession);
+    $session = new FormSelect('Session Date', 'SessionDate', 'SessionDate', $formSelectDataSession);
     echo $session->renderItem();
     ?>
     <?php
-    $initiator=new FormSelect('Player Name', 'PlayerName', 'PlayerName', $formSelectDataPlayer);
+    $initiator = new FormSelect('Player Name', 'PlayerName', 'PlayerName', $formSelectDataPlayer);
     echo $initiator->renderItem();
     ?>
     <input type="submit" value="Sign up!"/>
 </form>
 
 <?php
-$table=new Table('sessions.php', $sessionRepository);
+$table = new Table('sessions.php', $sessionRepository);
 $table->addColumn(new TableColumn('Date', 'getSessiondate', 'Date'));
 $table->addColumn(new TableColumn('Level range', 'getLevelrange', 'Level_range'));
 $table->addColumn(new TableColumnBoolean('Approved by GM', 'getApproved', 'Approved'));
@@ -63,5 +61,5 @@ $table->addColumn(new TableColumn('Buddy', 'getBuddy', 'Buddy'));
 $table->setQuery($sessionsQuery);
 echo $table->render();
 ?>
-    </body>
-    </html>
+</body>
+</html>
