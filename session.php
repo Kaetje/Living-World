@@ -4,8 +4,7 @@ require_once "autoload.php";
 $database = new database();
 $sessionRepository = new SessionRepository($database);
 
-$query = $sessionRepository->getSessionsQuery();
-$query->addWhere('ID = ' . (int)$key);
+$query = $sessionRepository->getSessionsQuery((int)$key);
 
 $sessions = $sessionRepository->getSessionsFromQuery($query);
 if (!count($sessions)) {
