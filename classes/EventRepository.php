@@ -28,7 +28,7 @@ class EventRepository implements Repository
     /**
      * @return Event[]
      */
-    function getEventsFromQuery(Query $query): array
+    function getEventsFromQuery(QueryInterface $query): array
     {
         $query = $this->db->query(
             $query->getQuery());
@@ -40,7 +40,7 @@ class EventRepository implements Repository
         return $objects;
     }
 
-    function getEventsQuery($charid): Query
+    function getEventsQuery($charid): QueryInterface
     {
         return new Query("SELECT xpevents.sessionnumber as sessionnumber, xpevents.description as description, xpevents.xpamount as XP, xpevents.ID as id
                 FROM xpevents 
@@ -48,7 +48,7 @@ class EventRepository implements Repository
                 WHERE characters_xpevents.character_id = $charid");
     }
 
-    function getObjectsFromQuery(Query $query): array
+    function getObjectsFromQuery(QueryInterface $query): array
     {
         return $this->getEventsFromQuery($query);
     }

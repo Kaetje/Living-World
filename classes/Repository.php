@@ -4,6 +4,6 @@
 interface Repository
 {
 
-    public function getObjectsFromQuery(Query $query): array;
+    public function getObjectsFromQuery(QueryInterface $query): array;
 
 }

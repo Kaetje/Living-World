@@ -58,7 +58,7 @@ class CharacterRepository implements Repository
     /**
      * @return Character[]
      */
-    function getCharactersFromQuery(Query $query): array
+    function getCharactersFromQuery(QueryInterface $query): array
     {
         $query = $this->db->query(
             $query->getQuery());
@@ -70,7 +70,7 @@ class CharacterRepository implements Repository
         return $objects;
     }
 
-    function getCharactersQuery(): Query
+    function getCharactersQuery(): QueryInterface
     {
         return new Query("SELECT players.PlayerName as playername, CharacterName as charname, SUM(xpevents.xpamount) as XP, characters.ID as charid, Race as race, Class as class, Status as status
                 FROM `characters` 
@@ -82,7 +82,7 @@ class CharacterRepository implements Repository
     }
 
 
-    public function getObjectsFromQuery(Query $query): array
+    public function getObjectsFromQuery(QueryInterface $query): array
     {
         return $this->getCharactersFromQuery($query);
     }
