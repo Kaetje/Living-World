@@ -49,6 +49,7 @@ require "gmbar.php"
     $table->addColumn(new TableColumn('Mission', 'getMission', 'Mission'));
     $table->addColumn(new TableColumn('Initiator', 'getInitiator', 'Initiator'));
     $table->addColumn(new TableColumn('Buddy', 'getBuddy', 'Buddy'));
+    $table->addColumn(new TableColumn('Players', 'getPlayers', 'Players'));
     $table->setQuery($sessionsQuery);
     echo $table->render();
     ?>

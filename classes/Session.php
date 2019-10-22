@@ -54,13 +54,19 @@ class Session
 
     public function getPlayers()
     {
-        return $this->players;
+        $objects = [];
+        foreach ($this->players as $player) {
+            if ($player['rol'] > 2) {
+                $objects[] = $player['playerName'];
+            }
+        }
+        return implode(', ', $objects);
     }
 
     public function getInitiator()
     {
-        foreach ($this->players as $player){
-            if ($player['rol'] == 1){
+        foreach ($this->players as $player) {
+            if ($player['rol'] == 1) {
                 return $player['playerName'];
             }
         }
@@ -69,8 +75,8 @@ class Session
 
     public function getBuddy()
     {
-        foreach ($this->players as $player){
-            if ($player['rol'] == 2){
+        foreach ($this->players as $player) {
+            if ($player['rol'] == 2) {
                 return $player['playerName'];
             }
         }

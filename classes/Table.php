@@ -30,7 +30,7 @@ class Table
         $this->columns[] = $column;
     }
 
-    public function setQuery(Query $query)
+    public function setQuery(QueryInterface $query)
     {
         $this->query = $query;
     }
