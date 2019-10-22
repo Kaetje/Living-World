@@ -32,10 +32,10 @@ class PriorityPlayerQuery implements QueryInterface
         if (!$ids) {
             return "SELECT PlayerName as playername, ID as id FROM `players`";
         }
-        $where = ' WHERE session_id IN ($idsString) ' . implode(', ', $ids);
+        $where = ' WHERE sessionID IN ( ' . implode(', ', $ids).')';
         return "SELECT PlayerName as playername, ID as id
                 FROM `players` WHERE ID NOT IN (
-                    SELECT player_id FROM session_players $where  
+                    SELECT playerID FROM sessions_players $where  
                 )";
     }
 }
