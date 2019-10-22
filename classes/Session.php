@@ -9,12 +9,9 @@ class Session
     private $mission;
     private $sessiondate;
     private $approved;
-    private $initiator;
-    private $buddy;
-    private $marlon;
-    private $players;
+    private $players = [];
 
-    public function __construct($id, $creationdatetime, $levelrange, $mission, $sessiondate, $approved, $initiator, $buddy, $marlon, $players)
+    public function __construct($id, $creationdatetime, $levelrange, $mission, $sessiondate, $approved, array $players)
     {
         $this->id = $id;
         $this->creationdatetime = $creationdatetime;
@@ -22,9 +19,6 @@ class Session
         $this->mission = $mission;
         $this->sessiondate = $sessiondate;
         $this->approved = $approved;
-        $this->initiator = $initiator;
-        $this->buddy = $buddy;
-        $this->marlon = $marlon;
         $this->players = $players;
     }
 
@@ -58,25 +52,29 @@ class Session
         return $this->approved;
     }
 
-    public function getInitiator()
-    {
-        return $this->initiator;
-    }
-
-    public function getBuddy()
-    {
-        return $this->buddy;
-    }
-
-    public function getMarlon()
-    {
-        return $this->marlon;
-    }
-
     public function getPlayers()
     {
         return $this->players;
     }
 
+    public function getInitiator()
+    {
+        foreach ($this->players as $player){
+            if ($player['rol'] == 1){
+                return $player['playerName'];
+            }
+        }
+        return 'The Dungeon Master';
+    }
+
+    public function getBuddy()
+    {
+        foreach ($this->players as $player){
+            if ($player['rol'] == 2){
+                return $player['playerName'];
+            }
+        }
+        return '';
+    }
 
 }

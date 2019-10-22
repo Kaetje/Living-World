@@ -29,7 +29,14 @@ class SessionRepository implements Repository
         $sessions = mysqli_fetch_all($query, MYSQLI_ASSOC);
         $objects = [];
         foreach ($sessions as $session) {
-            $objects[] = new Session($session["id"], $session["creationdatetime"], $session["levelrange"], $session["mission"], $session["sessiondate"], $session["approved"], $session["initiator"], $session["buddy"], $session["marlon"], $session["players"]);
+            $session["players"] = mysqli_fetch_all($this->db->query('
+                    Select playerID as playerID, rol as rol, players.PlayerName as playerName
+                    from sessions_players
+                    LEFT JOIN players on sessions_players.playerID = players.ID
+                    WHERE sessionID = '.$session["id"].'
+                    GROUP By playerID
+                '), MYSQLI_ASSOC);
+            $objects[] = new Session($session["id"], $session["creationdatetime"], $session["levelrange"], $session["mission"], $session["sessiondate"], $session["approved"], $session["players"]);
         }
         return $objects;
     }
@@ -37,16 +44,8 @@ class SessionRepository implements Repository
     function getSessionsQuery(): Query
     {
         return new Query("
-                            select sessions.ID as id, Creation_datetime as creationdatetime, level_ranges.Name as levelrange, Mission as mission, Session_date as sessiondate, Stamp_of_approval as approved, COALESCE(p1.PlayerName, \"\") as initiator, COALESCE(p2.PlayerName, \"\") as buddy, COALESCE(p3.PlayerName, \"\") as marlon, COALESCE(p4.PlayerName, \"\") as players
+                            select sessions.ID as id, Creation_datetime as creationdatetime, level_ranges.Name as levelrange, Mission as mission, Session_date as sessiondate, Stamp_of_approval as approved
                             from sessions
-                            left join sessions_players sp1 on sessions.ID = sp1.SessionID and sp1.rol = 1
-                            left join players p1 on sp1.playerID = p1.ID
-                            left join sessions_players sp2 on sessions.ID = sp2.SessionID and sp2.rol = 2
-                            left join players p2 on sp2.playerID = p2.ID
-                            left join sessions_players sp3 on sessions.ID = sp3.SessionID and sp3.rol = 3
-                            left join players p3 on sp3.playerID = p3.ID
-                            left join sessions_players sp4 on sessions.ID = sp4.SessionID and sp4.rol = 4
-                            left join players p4 on sp4.playerID = p4.ID
                             LEFT JOIN level_ranges on Level_rangeID = level_ranges.ID
                                     GROUP BY sessions.ID
                                     ORDER BY Session_date
