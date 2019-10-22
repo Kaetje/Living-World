@@ -3,6 +3,20 @@ require_once "autoload.php";
 $database=new database();
 $sessionRepository=new SessionRepository($database);
 $sessionsQuery=$sessionRepository->getSessionsQuery();
+
+if(isset($_POST["SessionDate"])){
+    $sessionRepository->approveSession($_POST["SessionDate"]);
+}
+
+//the following is to create and fill the formSelectDataPlayer
+$sessionObjects=$sessionRepository->getSessionsFromQuery($sessionsQuery);
+$formSelectDataSession=[];
+foreach ($sessionObjects as $sessionObject)
+{
+    $formSelectDataSession[$sessionObject->getId()]=$sessionObject->getSessiondate();
+}
+
+
 ?>
 <html>
 <head>
@@ -18,6 +32,16 @@ require "gmbar.php"
 ?>
 
 <div class="gmpage">
+    <h2>Approve a session:</h2>
+    <form method="post">
+        <?php
+        $session=new FormSelect('Session Date', 'SessionDate', 'SessionDate', $formSelectDataSession);
+        echo $session->renderItem();
+        ?>
+        <input type="submit" value="Approve"/>
+    </form>
+
+    <h2>Session Overview:</h2>
     <?php
     $table=new Table('sessions.php', $sessionRepository);
     $table->addColumn(new TableColumn('Date', 'getSessiondate', 'Date'));

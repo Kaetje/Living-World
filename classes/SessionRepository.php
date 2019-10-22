@@ -53,9 +53,13 @@ class SessionRepository implements Repository
                             ");
     }
 
-
     public function getObjectsFromQuery(Query $query): array
     {
         return $this->getSessionsFromQuery($query);
+    }
+
+    function approveSession ($id)
+    {
+        $this->db->query( "UPDATE `sessions` SET `Stamp_of_approval`= '1' WHERE `ID` = $id");
     }
 }

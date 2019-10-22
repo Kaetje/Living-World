@@ -48,6 +48,7 @@ class FormSelect
         $output .= '" name="';
         $output .= $this->getname();
         $output .= '">';
+        $output .= '<option value="-"></option>';
         foreach ($this->items as $key=>$item)
         {
             $output .= '<option value="';
